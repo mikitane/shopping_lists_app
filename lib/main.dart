@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shopping_lists_app/global_state/providers.dart';
 import 'package:shopping_lists_app/global_state/shopping_lists_state.dart';
 import 'package:shopping_lists_app/routes.dart';
 import 'package:shopping_lists_app/l10n/localization.dart';
@@ -15,11 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => ShoppingListsState(),
-        ),
-      ],
+      providers: providers,
       child: MaterialApp(
         title: 'Shopping Lists App',
         initialRoute: ShoppingListsScreen.routeName,

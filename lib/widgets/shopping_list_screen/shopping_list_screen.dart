@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:shopping_lists_app/global_state/shopping_lists_state.dart';
+import 'package:shopping_lists_app/models/shopping_list_model.dart';
+import 'package:shopping_lists_app/widgets/shopping_list_screen/product_list.dart';
 import 'package:uuid/uuid.dart';
 
 class ShoppingListScreenArguments {
@@ -12,14 +16,29 @@ class ShoppingListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ShoppingListScreenArguments args = ModalRoute.of(context).settings.arguments;
+    final ShoppingListScreenArguments args =
+        ModalRoute.of(context).settings.arguments;
+
+    final ShoppingListModel shoppingList = context.select(
+        (ShoppingListsState state) =>
+            state.getShoppingListById(args.shoppingListId));
 
     return Scaffold(
-      appBar:
-          AppBar(title: Text(AppLocalizations.of(context).shoppingListsHeader)),
-      body: Center(
-        child: Text('ShoppingListId: ${args.shoppingListId}'),
-      ),
-    );
+        appBar: AppBar(
+            title: Text(AppLocalizations.of(context).shoppingListsHeader)),
+        body: Column(
+          children: [
+            Expanded(
+              child: ProductList(
+                products: shoppingList.products,
+              ),
+            ),
+            Container(
+              height: 56,
+              width: double.infinity,
+              decoration: BoxDecoration(color: Theme.of(context).primaryColor),
+            ),
+          ],
+        ));
   }
 }
