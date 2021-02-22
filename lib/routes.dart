@@ -1,5 +1,7 @@
-import 'package:shopping_lists_app/widgets/shopping_lists/shopping_lists.dart';
+import 'package:shopping_lists_app/widgets/shopping_list_screen/shopping_list_screen.dart';
+import 'package:shopping_lists_app/widgets/shopping_lists_screen/shopping_lists_screen.dart';
 
 var routes = {
-  '/': (context) => ShoppingLists()
+  ShoppingListsScreen.routeName: (context) => ShoppingListsScreen(),
+  ShoppingListScreen.routeName: (context) => ShoppingListScreen()
 };
