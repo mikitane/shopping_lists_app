@@ -3,11 +3,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_lists_app/global_state/shopping_lists_state.dart';
 import 'package:shopping_lists_app/models/shopping_list_model.dart';
-import 'package:shopping_lists_app/widgets/shopping_list_screen/product_list.dart';
+import 'package:shopping_lists_app/widgets/product_list/product_list.dart';
 import 'package:uuid/uuid.dart';
 
-class ShoppingListScreenArguments {
-  ShoppingListScreenArguments({this.shoppingListId});
+class ShoppingListDetailsScreenArguments {
+  ShoppingListDetailsScreenArguments({this.shoppingListId});
   final String shoppingListId;
 }
 
@@ -16,7 +16,7 @@ class ShoppingListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ShoppingListScreenArguments args =
+    final ShoppingListDetailsScreenArguments args =
         ModalRoute.of(context).settings.arguments;
 
     final ShoppingListModel shoppingList = context.select(

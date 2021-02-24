@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_lists_app/models/shopping_list_model.dart';
-import 'package:shopping_lists_app/widgets/shopping_list_screen/shopping_list_screen.dart';
+import 'package:shopping_lists_app/screens/shopping_list_details_screen.dart';
 
 class ShoppingListItem extends StatelessWidget {
   ShoppingListItem({this.shoppingList});
@@ -19,7 +19,7 @@ class ShoppingListItem extends StatelessWidget {
           context,
           ShoppingListScreen.routeName,
           arguments:
-              ShoppingListScreenArguments(shoppingListId: shoppingList.id),
+              ShoppingListDetailsScreenArguments(shoppingListId: shoppingList.id),
         );
       },
       child: Card(

@@ -5,7 +5,7 @@ import 'package:shopping_lists_app/global_state/shopping_lists_state.dart';
 import 'package:shopping_lists_app/routes.dart';
 import 'package:shopping_lists_app/l10n/localization.dart';
 import 'package:shopping_lists_app/theme.dart';
-import 'package:shopping_lists_app/widgets/shopping_lists_screen/shopping_lists_screen.dart';
+import 'package:shopping_lists_app/screens/shopping_lists_screen.dart';
 
 void main() {
   runApp(MyApp());
