@@ -11,7 +11,7 @@ class ShoppingLists extends StatelessWidget {
         context.select((ShoppingListsState state) => state.shoppingLists);
 
     return ListView.separated(
-      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+      padding: EdgeInsets.symmetric(horizontal: 12),
       itemCount: shoppingLists.length,
       itemBuilder: (context, index) {
         return ShoppingListItem(shoppingList: shoppingLists[index]);

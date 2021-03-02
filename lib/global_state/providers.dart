@@ -10,8 +10,10 @@ final initialShoppingLists = [
     id: Uuid().v4(),
     name: 'Kauppalista',
     products: [
-      ProductModel(name: 'Maito', done: true),
-      ProductModel(name: 'Leipä', done: false)
+      ProductModel(name: 'Maito', amount: '1l', done: true),
+      ProductModel(name: 'Maito', amount: '1l', done: true),
+      ProductModel(name: 'Maito', amount: '1l', done: true),
+      ProductModel(name: 'Maito', amount: '1l', done: false),
     ],
   ),
   ShoppingListModel(

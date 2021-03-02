@@ -13,6 +13,8 @@ void main() {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -20,10 +22,10 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Shopping Lists App',
         initialRoute: ShoppingListsScreen.routeName,
-        routes: routes,
+        routes: buildRoutes(),
         theme: buildTheme(context),
-        localizationsDelegates: localizationsDelegates,
-        supportedLocales: supportedLocales,
+        localizationsDelegates: buildLocalizationsDelegates(),
+        supportedLocales: buildSupportedLocales(),
       ),
     );
   }

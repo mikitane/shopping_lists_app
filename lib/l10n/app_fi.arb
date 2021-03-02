@@ -1,3 +1,9 @@
 {
-    "shoppingListsHeader": "Ostoslistat"
+    "shoppingListsHeader": "Ostoslistat",
+    "shoppingListHeader": "Ostoslista",
+    "productNameInputPlaceholder": "Tuotteen nimi",
+    "productAmountInputPlaceholder": "Määrä",
+    "shoppingListProductCountText": "tuotetta",
+    "shoppingListProductCountSingleText": "tuote",
+    "newShoppingListLabel": "Uusi lista"
 }

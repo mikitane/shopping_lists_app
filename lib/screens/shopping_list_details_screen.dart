@@ -3,8 +3,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_lists_app/global_state/shopping_lists_state.dart';
 import 'package:shopping_lists_app/models/shopping_list_model.dart';
+import 'package:shopping_lists_app/widgets/common/custom_app_bar.dart';
+import 'package:shopping_lists_app/widgets/new_product/new_product.dart';
 import 'package:shopping_lists_app/widgets/product_list/product_list.dart';
-import 'package:uuid/uuid.dart';
 
 class ShoppingListDetailsScreenArguments {
   ShoppingListDetailsScreenArguments({this.shoppingListId});
@@ -24,21 +25,18 @@ class ShoppingListScreen extends StatelessWidget {
             state.getShoppingListById(args.shoppingListId));
 
     return Scaffold(
-        appBar: AppBar(
-            title: Text(AppLocalizations.of(context).shoppingListsHeader)),
-        body: Column(
-          children: [
-            Expanded(
-              child: ProductList(
-                products: shoppingList.products,
-              ),
+      appBar:
+          CustomAppBar(title: AppLocalizations.of(context).shoppingListHeader),
+      body: Column(
+        children: [
+          Expanded(
+            child: ProductList(
+              products: shoppingList.products,
             ),
-            Container(
-              height: 56,
-              width: double.infinity,
-              decoration: BoxDecoration(color: Theme.of(context).primaryColor),
-            ),
-          ],
-        ));
+          ),
+          NewProduct(),
+        ],
+      ),
+    );
   }
 }
