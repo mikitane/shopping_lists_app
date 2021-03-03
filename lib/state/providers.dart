@@ -1,5 +1,5 @@
 import 'package:provider/provider.dart';
-import 'package:shopping_lists_app/global_state/shopping_lists_state.dart';
+import 'package:shopping_lists_app/state/shopping_lists_state.dart';
 import 'package:shopping_lists_app/models/product_model.dart';
 import 'package:shopping_lists_app/models/shopping_list_model.dart';
 import 'package:uuid/uuid.dart';
@@ -23,7 +23,7 @@ final initialShoppingLists = [
   )
 ];
 
-var providers = [
+buildProviders() => [
   ChangeNotifierProvider(
     create: (context) =>
         ShoppingListsState(shoppingLists: initialShoppingLists),

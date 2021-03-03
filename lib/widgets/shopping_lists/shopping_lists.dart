@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shopping_lists_app/global_state/shopping_lists_state.dart';
+import 'package:shopping_lists_app/state/shopping_lists_state.dart';
 import 'package:shopping_lists_app/models/shopping_list_model.dart';
 import 'package:shopping_lists_app/widgets/shopping_lists/shopping_list_item.dart';
 
