@@ -4,7 +4,9 @@ import 'package:uuid/uuid.dart';
 
 class ShoppingListModel {
   ShoppingListModel(
-      {@required this.id, @required this.name, @required this.products});
+      {@required this.name, this.products = const [], id}) {
+    this.id = id ?? Uuid().v4();
+  }
 
   String id;
   String name;

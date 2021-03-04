@@ -1,4 +1,18 @@
 {
     "shoppingListsHeader": "Shopping Lists",
-    "@shoppingListsHeader": {}
+    "shoppingListHeader": "Shopping List",
+    "productNameInputPlaceholder": "Name of the product",
+    "productAmountInputPlaceholder": "Amount",
+    "shoppingListProductCountText": "products",
+    "shoppingListProductCountSingleText": "product",
+    "newShoppingListLabel": "New list",
+
+
+    "@shoppingListHeader": {},
+    "@shoppingListsHeader": {},
+    "@productNameInputPlaceholder": {},
+    "@productAmountInputPlaceholder": {},
+    "@shoppingListProductCountText": {},
+    "@shoppingListProductCountSingleText": {},
+    "@newShoppingListLabel": {}
 }
