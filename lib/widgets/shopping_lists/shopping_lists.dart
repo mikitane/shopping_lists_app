@@ -5,10 +5,12 @@ import 'package:shopping_lists_app/models/shopping_list_model.dart';
 import 'package:shopping_lists_app/widgets/shopping_lists/shopping_list_item.dart';
 
 class ShoppingLists extends StatelessWidget {
+  ShoppingLists({ this.shoppingLists });
+
+  List<ShoppingListModel> shoppingLists;
+
   @override
   Widget build(BuildContext context) {
-    List<ShoppingListModel> shoppingLists =
-        context.select((ShoppingListsState state) => state.shoppingLists);
 
     return ListView.separated(
       padding: EdgeInsets.symmetric(horizontal: 12),

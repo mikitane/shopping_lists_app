@@ -1,29 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:shopping_lists_app/models/product_model.dart';
+import 'package:shopping_lists_app/repositories/product_repository.dart';
 import 'package:shopping_lists_app/theme.dart'
     show defaultBorderRadius, primaryColors;
 
 class NewProduct extends StatefulWidget {
+  NewProduct({ this.shoppingListId });
+
+  final String shoppingListId;
+
   @override
   _NewProductState createState() => _NewProductState();
 }
 
 // TODO: Maybe create a common Input element?
 class _NewProductState extends State<NewProduct> {
-  String productName = '';
+  TextEditingController nameFieldController = TextEditingController();
+  TextEditingController amountFieldController = TextEditingController();
+  FocusNode nameFieldFocusNode;
 
-  void handleNameInputChange(String value) {
-    setState(() {
-      productName = value;
-    });
+  @override
+  void initState() {
+    super.initState();
+    nameFieldFocusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    nameFieldFocusNode.dispose();
+    super.dispose();
+  }
+
+  void createProduct() {
+    if (nameFieldController.text.isNotEmpty) {
+      context.read<ProductRepository>().createProduct(ProductModel(
+          shoppingListId: widget.shoppingListId,
+          name: nameFieldController.text,
+          amount: amountFieldController.text,
+          done: false));
+
+      nameFieldFocusNode.requestFocus();
+    }
+
+    nameFieldController.text = '';
+    amountFieldController.text = '';
   }
 
   Widget _buildNameInput(BuildContext context) {
     return Expanded(
       child: Container(
         child: TextField(
-          onChanged: handleNameInputChange,
-          style: TextStyle(fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
+          textInputAction: TextInputAction.next,
+          focusNode: nameFieldFocusNode,
+          controller: nameFieldController,
+          style: TextStyle(
+              fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
           decoration: InputDecoration(
               hintStyle: TextStyle(color: primaryColors[700]),
               // contentPadding: EdgeInsets.symmetric(horizontal: 16),
@@ -39,7 +72,11 @@ class _NewProductState extends State<NewProduct> {
     return Container(
       width: 80,
       child: TextField(
-        onChanged: handleNameInputChange,
+        textInputAction: TextInputAction.done,
+        onSubmitted: (value) {
+          createProduct();
+        },
+        controller: amountFieldController,
         style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
         decoration: InputDecoration(
             hintStyle: TextStyle(color: primaryColors[700]),
@@ -63,6 +100,7 @@ class _NewProductState extends State<NewProduct> {
   // TODO: Clean up
   @override
   Widget build(BuildContext context) {
+    print('NewProduct build');
     return Container(
       height: 48,
       margin: EdgeInsets.only(left: 16, right: 16, bottom: 16),
@@ -91,7 +129,7 @@ class _NewProductState extends State<NewProduct> {
             height: 50,
             width: 50,
             child: ElevatedButton(
-              onPressed: () => {},
+              onPressed: () => createProduct(),
               child: Icon(Icons.add,
                   color: Theme.of(context).colorScheme.onPrimary, size: 28),
               style: ButtonStyle(

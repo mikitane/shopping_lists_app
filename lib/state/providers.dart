@@ -1,4 +1,6 @@
 import 'package:provider/provider.dart';
+import 'package:shopping_lists_app/repositories/product_repository.dart';
+import 'package:shopping_lists_app/repositories/shopping_list_repository.dart';
 import 'package:shopping_lists_app/state/shopping_lists_state.dart';
 import 'package:shopping_lists_app/models/product_model.dart';
 import 'package:shopping_lists_app/models/shopping_list_model.dart';
@@ -23,7 +25,11 @@ final initialShoppingLists = [
   )
 ];
 
+
 buildProviders() => [
+  Provider(create: (_) => ShoppingListRepository(),),
+  Provider(create: (_) => ProductRepository(),),
+
   ChangeNotifierProvider(
     create: (context) =>
         ShoppingListsState(shoppingLists: initialShoppingLists),
