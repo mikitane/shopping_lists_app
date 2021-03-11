@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:shopping_lists_app/models/shopping_list_model.dart';
 import 'package:shopping_lists_app/repositories/product_repository.dart';
 import 'package:shopping_lists_app/repositories/shopping_list_repository.dart';
 import 'package:shopping_lists_app/widgets/common/custom_app_bar.dart';
+import 'package:shopping_lists_app/widgets/new_product/new_product.dart';
+import 'package:shopping_lists_app/widgets/new_shopping_list/new_shopping_list.dart';
 import 'package:shopping_lists_app/widgets/shopping_lists/shopping_lists.dart';
 
 class ShoppingListsScreen extends StatefulWidget {
@@ -15,12 +18,20 @@ class ShoppingListsScreen extends StatefulWidget {
 
 class _ShoppingListsScreenState extends State<ShoppingListsScreen> {
   ShoppingListRepository shoppingListRepository;
+  Stream<List<ShoppingListModel>> shoppingListStream;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     shoppingListRepository = context.read<ShoppingListRepository>();
+    shoppingListStream = shoppingListRepository.getShoppingListStream();
+  }
+
+  void showNewShoppingListDialog() {
+    showDialog(context: context, builder: (BuildContext dialogContext) {
+      return NewShoppingList();
+    });
   }
 
   @override
@@ -38,6 +49,7 @@ class _ShoppingListsScreenState extends State<ShoppingListsScreen> {
             Expanded(
                 child: StreamBuilder(
               initialData: shoppingListRepository.shoppingLists,
+              stream: shoppingListStream,
               builder: (context, snapshot) {
                 return ShoppingLists(
                   shoppingLists: snapshot.data,
@@ -50,7 +62,7 @@ class _ShoppingListsScreenState extends State<ShoppingListsScreen> {
               return Container(
                 margin: EdgeInsets.only(bottom: 16),
                 child: ElevatedButton.icon(
-                  onPressed: () => { Scaffold.of(buttonContext).showSnackBar(SnackBar(content: Text('Tulossa pian: Listojen luonti!'),)) },
+                  onPressed: () => {showNewShoppingListDialog()},
                   icon: Icon(Icons.add,
                       color: Theme.of(context).colorScheme.onPrimary, size: 28),
                   label: Text(

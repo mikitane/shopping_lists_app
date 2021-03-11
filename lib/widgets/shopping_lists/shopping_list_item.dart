@@ -20,12 +20,15 @@ class ShoppingListItem extends StatefulWidget {
 
 class _ShoppingListItemState extends State<ShoppingListItem> {
   ProductRepository productRepository;
+  Stream<List<ProductModel>> productsStream;
 
   @override
   void initState() {
     super.initState();
     productRepository = context.read<ProductRepository>();
+    productsStream = productRepository.getProductsStream();
   }
+
 
   List<ProductModel> filterProducts(
       List<ProductModel> products, String shoppingListId) {
@@ -93,7 +96,8 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        initialData: productRepository.products,
+        initialData: filterProducts(productRepository.products, widget.shoppingList.id),
+        stream: productsStream,
         builder: (context, snapshot) {
           List<ProductModel> filteredProducts =
               filterProducts(snapshot.data, widget.shoppingList.id);
@@ -117,7 +121,7 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
                 context,
                 ShoppingListScreen.routeName,
                 arguments: ShoppingListDetailsScreenArguments(
-                    shoppingListId: widget.shoppingList.id),
+                    shoppingList: widget.shoppingList),
               );
             },
             child: Container(

@@ -25,10 +25,11 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  intl: ^0.16.1
+  intl: 0.17.0
   provider: ^4.0.0
   uuid: ^2.2.2
   percent_indicator: "^2.1.7+2"
+  # implicitly_animated_reorderable_list: "0.3.2"
 
 
   # The following adds the Cupertino Icons font to your application.

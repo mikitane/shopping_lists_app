@@ -10,8 +10,8 @@ import 'package:shopping_lists_app/widgets/new_product/new_product.dart';
 import 'package:shopping_lists_app/widgets/product_list/product_list.dart';
 
 class ShoppingListDetailsScreenArguments {
-  ShoppingListDetailsScreenArguments({this.shoppingListId});
-  final String shoppingListId;
+  ShoppingListDetailsScreenArguments({this.shoppingList});
+  final ShoppingListModel shoppingList;
 }
 
 class ShoppingListScreen extends StatefulWidget {
@@ -56,22 +56,22 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
 
     return Scaffold(
       appBar:
-          CustomAppBar(title: AppLocalizations.of(context).shoppingListHeader),
+          CustomAppBar(title: args.shoppingList.name),
       body: Column(
         children: [
           Expanded(
             child: StreamBuilder(
                 initialData: sortAndFilterProducts(
-                        productRepository.products, args.shoppingListId) ??
+                        productRepository.products, args.shoppingList.id) ??
                     [],
                 stream: productsStream,
                 builder: (context, AsyncSnapshot<List<ProductModel>> snapshot) {
                   return ProductList(
                       products: sortAndFilterProducts(
-                          snapshot.data, args.shoppingListId));
+                          snapshot.data, args.shoppingList.id));
                 }),
           ),
-          NewProduct(shoppingListId: args.shoppingListId),
+          NewProduct(shoppingListId: args.shoppingList.id),
         ],
       ),
     );
