@@ -3,7 +3,7 @@ import 'package:shopping_lists_app/models/product_model.dart';
 import 'package:shopping_lists_app/widgets/product_list/product_list_item.dart';
 
 class ProductList extends StatelessWidget {
-  ProductList({this.products,   this.padding = const EdgeInsets.all(12)});
+  ProductList({required this.products,   this.padding = const EdgeInsets.all(12)});
 
   final List<ProductModel> products;
   final EdgeInsets padding;

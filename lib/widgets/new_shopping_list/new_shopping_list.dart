@@ -11,19 +11,19 @@ class NewShoppingList extends StatefulWidget {
 
 class _NewShoppingListState extends State<NewShoppingList> {
   TextEditingController nameFieldController = TextEditingController();
-  FocusNode nameFieldFocusNode;
+  FocusNode? nameFieldFocusNode;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     nameFieldFocusNode = FocusNode();
-    nameFieldFocusNode.requestFocus();
+    nameFieldFocusNode!.requestFocus();
   }
 
   @override
   void dispose() {
-    nameFieldFocusNode.dispose();
+    nameFieldFocusNode!.dispose();
     super.dispose();
   }
 

@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_lists_app/models/product_model.dart';
-import 'package:shopping_lists_app/models/shopping_list_model.dart';
 import 'package:shopping_lists_app/repositories/product_repository.dart';
-import 'package:shopping_lists_app/repositories/shopping_list_repository.dart';
 import 'package:shopping_lists_app/theme.dart'
     show defaultBorderRadius, primaryColors;
 
 class NewProduct extends StatefulWidget {
-  NewProduct({ this.shoppingListId });
+  NewProduct({ required this.shoppingListId });
 
   final String shoppingListId;
 
@@ -21,7 +19,7 @@ class NewProduct extends StatefulWidget {
 class _NewProductState extends State<NewProduct> {
   TextEditingController nameFieldController = TextEditingController();
   TextEditingController amountFieldController = TextEditingController();
-  FocusNode nameFieldFocusNode;
+  FocusNode? nameFieldFocusNode;
 
   @override
   void initState() {
@@ -31,7 +29,7 @@ class _NewProductState extends State<NewProduct> {
 
   @override
   void dispose() {
-    nameFieldFocusNode.dispose();
+    nameFieldFocusNode!.dispose();
     super.dispose();
   }
 
@@ -43,7 +41,7 @@ class _NewProductState extends State<NewProduct> {
           amount: amountFieldController.text,
           done: false));
 
-      nameFieldFocusNode.requestFocus();
+      nameFieldFocusNode!.requestFocus();
     }
 
     nameFieldController.text = '';
@@ -64,7 +62,7 @@ class _NewProductState extends State<NewProduct> {
               // contentPadding: EdgeInsets.symmetric(horizontal: 16),
               border: InputBorder.none,
               hintText:
-                  AppLocalizations.of(context).productNameInputPlaceholder),
+                  AppLocalizations.of(context)!.productNameInputPlaceholder),
         ),
       ),
     );
@@ -85,7 +83,7 @@ class _NewProductState extends State<NewProduct> {
             // contentPadding: EdgeInsets.symmetric(horizontal: 16),
             border: InputBorder.none,
             hintText:
-                AppLocalizations.of(context).productAmountInputPlaceholder),
+                AppLocalizations.of(context)!.productAmountInputPlaceholder),
       ),
     );
   }

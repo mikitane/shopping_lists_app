@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_lists_app/models/product_model.dart';
 import 'package:shopping_lists_app/repositories/product_repository.dart';
 import 'package:shopping_lists_app/theme.dart' show defaultBorderRadius, primaryColors;
 
 class ProductListItem extends StatelessWidget {
-  ProductListItem({this.product, Key key}): super(key: key);
+  ProductListItem({required this.product, required Key key}): super(key: key);
 
   final ProductModel product;
 

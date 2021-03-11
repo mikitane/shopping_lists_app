@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_lists_app/models/shopping_list_model.dart';
-import 'package:shopping_lists_app/repositories/product_repository.dart';
 import 'package:shopping_lists_app/repositories/shopping_list_repository.dart';
 import 'package:shopping_lists_app/widgets/common/custom_app_bar.dart';
-import 'package:shopping_lists_app/widgets/new_product/new_product.dart';
 import 'package:shopping_lists_app/widgets/new_shopping_list/new_shopping_list.dart';
 import 'package:shopping_lists_app/widgets/shopping_lists/shopping_lists.dart';
 
@@ -17,8 +15,8 @@ class ShoppingListsScreen extends StatefulWidget {
 }
 
 class _ShoppingListsScreenState extends State<ShoppingListsScreen> {
-  ShoppingListRepository shoppingListRepository;
-  Stream<List<ShoppingListModel>> shoppingListStream;
+  late ShoppingListRepository shoppingListRepository;
+  Stream<List<ShoppingListModel>>? shoppingListStream;
 
   @override
   void initState() {
@@ -38,7 +36,7 @@ class _ShoppingListsScreenState extends State<ShoppingListsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: AppLocalizations.of(context).shoppingListsHeader,
+        title: AppLocalizations.of(context)!.shoppingListsHeader,
         fontSize: 28.0,
         fontWeight: FontWeight.bold,
         toolbarHeight: 90.0,
@@ -50,7 +48,7 @@ class _ShoppingListsScreenState extends State<ShoppingListsScreen> {
                 child: StreamBuilder(
               initialData: shoppingListRepository.shoppingLists,
               stream: shoppingListStream,
-              builder: (context, snapshot) {
+              builder: (context, AsyncSnapshot snapshot) {
                 return ShoppingLists(
                   shoppingLists: snapshot.data,
                 );
@@ -66,7 +64,7 @@ class _ShoppingListsScreenState extends State<ShoppingListsScreen> {
                   icon: Icon(Icons.add,
                       color: Theme.of(context).colorScheme.onPrimary, size: 28),
                   label: Text(
-                    AppLocalizations.of(context).newShoppingListLabel,
+                    AppLocalizations.of(context)!.newShoppingListLabel,
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                   style: ButtonStyle(

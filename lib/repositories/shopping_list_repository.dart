@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:shopping_lists_app/models/shopping_list_model.dart';
-import 'package:uuid/uuid.dart';
 
 class ShoppingListRepository {
   // TODO: Use real stream from database

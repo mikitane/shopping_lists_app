@@ -22,10 +22,10 @@ Map<int, Color> secondaryColors = {
 Color onDisabledColor = Color(0xFFCFC6BF);
 
 ColorScheme colorScheme = ColorScheme(
-  primary: primaryColors[500],
-  primaryVariant: primaryColors[700],
-  secondary: secondaryColors[500],
-  secondaryVariant: secondaryColors[700],
+  primary: primaryColors[500]!,
+  primaryVariant: primaryColors[700]!,
+  secondary: secondaryColors[500]!,
+  secondaryVariant: secondaryColors[700]!,
   surface: Colors.white,
   background: const Color(0xFFF8F5F2),
   error: const Color(0xFFF88C8C),

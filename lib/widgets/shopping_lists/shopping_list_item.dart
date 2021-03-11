@@ -10,7 +10,7 @@ import 'package:shopping_lists_app/theme.dart'
     show defaultBorderRadius, primaryColors;
 
 class ShoppingListItem extends StatefulWidget {
-  ShoppingListItem({this.shoppingList});
+  ShoppingListItem({required this.shoppingList});
 
   final ShoppingListModel shoppingList;
 
@@ -19,8 +19,8 @@ class ShoppingListItem extends StatefulWidget {
 }
 
 class _ShoppingListItemState extends State<ShoppingListItem> {
-  ProductRepository productRepository;
-  Stream<List<ProductModel>> productsStream;
+  late ProductRepository productRepository;
+  Stream<List<ProductModel>>? productsStream;
 
   @override
   void initState() {
@@ -60,7 +60,7 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
       progressColor: donePercentage == 100
           ? Theme.of(context).colorScheme.secondary
           : Theme.of(context).colorScheme.primary,
-      backgroundColor: primaryColors[200],
+      backgroundColor: primaryColors[200]!,
       circularStrokeCap: CircularStrokeCap.round,
       startAngle: 180,
     );
@@ -68,8 +68,8 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
 
   Widget _buildDetailTexts(BuildContext context, int totalProductsCount) {
     String productCountLabel = totalProductsCount == 1
-        ? AppLocalizations.of(context).shoppingListProductCountSingleText
-        : AppLocalizations.of(context).shoppingListProductCountText;
+        ? AppLocalizations.of(context)!.shoppingListProductCountSingleText
+        : AppLocalizations.of(context)!.shoppingListProductCountText;
 
     return Container(
       margin: EdgeInsets.only(left: 16),
@@ -98,7 +98,7 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
     return StreamBuilder(
         initialData: filterProducts(productRepository.products, widget.shoppingList.id),
         stream: productsStream,
-        builder: (context, snapshot) {
+        builder: (context, AsyncSnapshot snapshot) {
           List<ProductModel> filteredProducts =
               filterProducts(snapshot.data, widget.shoppingList.id);
 
