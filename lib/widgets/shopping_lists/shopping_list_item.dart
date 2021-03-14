@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
-import 'package:shopping_lists_app/models/product_model.dart';
-import 'package:shopping_lists_app/models/shopping_list_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shopping_lists_app/data/models/product_model.dart';
+import 'package:shopping_lists_app/data/models/shopping_list_model.dart';
 import 'package:shopping_lists_app/repositories/product_repository.dart';
 import 'package:shopping_lists_app/screens/shopping_list_details_screen.dart';
+import 'package:shopping_lists_app/providers.dart';
 import 'package:shopping_lists_app/theme.dart'
     show defaultBorderRadius, primaryColors;
 
@@ -20,15 +21,12 @@ class ShoppingListItem extends StatefulWidget {
 
 class _ShoppingListItemState extends State<ShoppingListItem> {
   late ProductRepository productRepository;
-  Stream<List<ProductModel>>? productsStream;
 
   @override
   void initState() {
     super.initState();
-    productRepository = context.read<ProductRepository>();
-    productsStream = productRepository.getProductsStream();
+    productRepository = context.read(productRepositoryProvider);
   }
-
 
   List<ProductModel> filterProducts(
       List<ProductModel> products, String shoppingListId) {
@@ -95,50 +93,46 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-        initialData: filterProducts(productRepository.products, widget.shoppingList.id),
-        stream: productsStream,
-        builder: (context, AsyncSnapshot snapshot) {
-          List<ProductModel> filteredProducts =
-              filterProducts(snapshot.data, widget.shoppingList.id);
+    return Consumer(builder: (context, watch, child) {
+      final productList = watch(productRepositoryProvider.state);
+      List<ProductModel> filteredProducts =
+          filterProducts(productList, widget.shoppingList.id);
 
-          int doneProductsCount =
-              filteredProducts.where((product) => product.done).length;
-          int totalProductsCount = filteredProducts.length;
+      int doneProductsCount =
+          filteredProducts.where((product) => product.done).length;
+      int totalProductsCount = filteredProducts.length;
 
-          int donePercentage = totalProductsCount != 0
-              ? (doneProductsCount * 100 / totalProductsCount).round()
-              : 0;
+      int donePercentage = totalProductsCount != 0
+          ? (doneProductsCount * 100 / totalProductsCount).round()
+          : 0;
 
-          if (donePercentage == 100 &&
-              doneProductsCount != totalProductsCount) {
-            donePercentage = 99;
-          }
-
-          return GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(
-                context,
-                ShoppingListScreen.routeName,
-                arguments: ShoppingListDetailsScreenArguments(
-                    shoppingList: widget.shoppingList),
-              );
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
-                borderRadius: defaultBorderRadius,
-              ),
-              padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    _buildProgressIndicator(context, donePercentage),
-                    _buildDetailTexts(context, totalProductsCount),
-                  ]),
-            ),
+      if (donePercentage == 100 && doneProductsCount != totalProductsCount) {
+        donePercentage = 99;
+      }
+      return GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(
+            context,
+            ShoppingListScreen.routeName,
+            arguments: ShoppingListDetailsScreenArguments(
+                shoppingList: widget.shoppingList),
           );
-        });
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: defaultBorderRadius,
+          ),
+          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _buildProgressIndicator(context, donePercentage),
+                _buildDetailTexts(context, totalProductsCount),
+              ]),
+        ),
+      );
+    });
   }
 }

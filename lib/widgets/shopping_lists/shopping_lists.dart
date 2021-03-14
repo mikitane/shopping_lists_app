@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_lists_app/models/shopping_list_model.dart';
+import 'package:shopping_lists_app/data/models/shopping_list_model.dart';
 import 'package:shopping_lists_app/widgets/shopping_lists/shopping_list_item.dart';
 
 class ShoppingLists extends StatelessWidget {

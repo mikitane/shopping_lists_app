@@ -19,6 +19,7 @@ version: 1.0.0+1
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
+  flutter: 2.0.1
 
 dependencies:
   flutter:
@@ -26,11 +27,11 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: 0.17.0
-  provider: 5.0.0
   uuid: 3.0.1
   percent_indicator: 3.3.0-nullsafety.1
   hive: ^2.0.0
   hive_flutter: ^1.0.0
+  flutter_riverpod: ^0.13.1
   # implicitly_animated_reorderable_list: "0.3.2"
 
 

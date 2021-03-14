@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_lists_app/models/shopping_list_model.dart';
-import 'package:shopping_lists_app/repositories/shopping_list_repository.dart';
+import 'package:shopping_lists_app/data/models/shopping_list_model.dart';
+import 'package:shopping_lists_app/providers.dart';
+import 'package:shopping_lists_app/screens/shopping_list_details_screen.dart';
 import 'package:shopping_lists_app/theme.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class NewShoppingList extends StatefulWidget {
   @override
@@ -27,10 +28,18 @@ class _NewShoppingListState extends State<NewShoppingList> {
     super.dispose();
   }
 
-    void createShoppingList() {
+  void createShoppingList() {
     if (nameFieldController.text.isNotEmpty) {
-      context.read<ShoppingListRepository>().createShoppingList(ShoppingListModel(name: nameFieldController.text));
-      Navigator.of(context, rootNavigator: true).pop();
+      final newShoppingList = ShoppingListModel(name: nameFieldController.text);
+      context.read(shoppingListRepositoryProvider).save(newShoppingList);
+
+      final rootNavigator = Navigator.of(context, rootNavigator: true);
+      rootNavigator.pop();
+      rootNavigator.pushNamed(
+        ShoppingListScreen.routeName,
+        arguments:
+            ShoppingListDetailsScreenArguments(shoppingList: newShoppingList),
+      );
     }
   }
 

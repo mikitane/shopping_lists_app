@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
-import 'package:shopping_lists_app/models/product_model.dart';
-import 'package:shopping_lists_app/repositories/product_repository.dart';
+import 'package:shopping_lists_app/data/models/product_model.dart';
+import 'package:shopping_lists_app/providers.dart';
 import 'package:shopping_lists_app/theme.dart'
     show defaultBorderRadius, primaryColors;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 
 class NewProduct extends StatefulWidget {
   NewProduct({ required this.shoppingListId });
@@ -35,7 +36,7 @@ class _NewProductState extends State<NewProduct> {
 
   void createProduct() {
     if (nameFieldController.text.isNotEmpty) {
-      context.read<ProductRepository>().createProduct(ProductModel(
+      context.read(productRepositoryProvider).save(ProductModel(
           shoppingListId: widget.shoppingListId,
           name: nameFieldController.text,
           amount: amountFieldController.text,

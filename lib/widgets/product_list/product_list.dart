@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_lists_app/models/product_model.dart';
+import 'package:shopping_lists_app/data/models/product_model.dart';
 import 'package:shopping_lists_app/widgets/product_list/product_list_item.dart';
 
 class ProductList extends StatelessWidget {
@@ -10,21 +10,6 @@ class ProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return Container(
-    //   decoration: BoxDecoration(color: Colors.red),
-    //   child: AnimatedList(
-    //       initialItemCount: products.length,
-    //       itemBuilder: (BuildContext context, int index, animation) {
-    //         return SlideTransition(
-    //           position: Tween<Offset>(begin: Offset(-1, 0), end: Offset(0, 0))
-    //               .animate(animation),
-    //           child: ProductListItem(
-    //             product: products[index],
-    //           ),
-    //         );
-    //       }),
-    // );
-
     return ListView.separated(
       padding: padding,
       itemCount: products.length,

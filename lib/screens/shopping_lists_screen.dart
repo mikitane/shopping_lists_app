@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
-import 'package:shopping_lists_app/models/shopping_list_model.dart';
 import 'package:shopping_lists_app/repositories/shopping_list_repository.dart';
+import 'package:shopping_lists_app/providers.dart';
 import 'package:shopping_lists_app/widgets/common/custom_app_bar.dart';
 import 'package:shopping_lists_app/widgets/new_shopping_list/new_shopping_list.dart';
 import 'package:shopping_lists_app/widgets/shopping_lists/shopping_lists.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ShoppingListsScreen extends StatefulWidget {
   static const routeName = '/shoppingLists';
@@ -16,14 +16,12 @@ class ShoppingListsScreen extends StatefulWidget {
 
 class _ShoppingListsScreenState extends State<ShoppingListsScreen> {
   late ShoppingListRepository shoppingListRepository;
-  Stream<List<ShoppingListModel>>? shoppingListStream;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    shoppingListRepository = context.read<ShoppingListRepository>();
-    shoppingListStream = shoppingListRepository.getShoppingListStream();
+    shoppingListRepository = context.read(shoppingListRepositoryProvider);
   }
 
   void showNewShoppingListDialog() {
@@ -45,12 +43,12 @@ class _ShoppingListsScreenState extends State<ShoppingListsScreen> {
         child: Column(
           children: [
             Expanded(
-                child: StreamBuilder(
-              initialData: shoppingListRepository.shoppingLists,
-              stream: shoppingListStream,
-              builder: (context, AsyncSnapshot snapshot) {
+                child: Consumer(
+              builder: (context, watch, child) {
+                final shoppingLists = watch(shoppingListRepositoryProvider.state);
+
                 return ShoppingLists(
-                  shoppingLists: snapshot.data,
+                  shoppingLists: shoppingLists,
                 );
               },
             )),
