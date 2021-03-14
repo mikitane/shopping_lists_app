@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
-import 'package:shopping_lists_app/models/product_model.dart';
-import 'package:shopping_lists_app/repositories/product_repository.dart';
-import 'package:shopping_lists_app/theme.dart' show defaultBorderRadius, primaryColors;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shopping_lists_app/data/models/product_model.dart';
+import 'package:shopping_lists_app/providers.dart';
+import 'package:shopping_lists_app/theme.dart'
+    show defaultBorderRadius, primaryColors;
 
 class ProductListItem extends StatelessWidget {
-  ProductListItem({this.product, Key key}): super(key: key);
+  ProductListItem({required this.product, required Key key}) : super(key: key);
 
   final ProductModel product;
 
@@ -46,15 +46,19 @@ class ProductListItem extends StatelessWidget {
           height: 50,
           width: 50,
           child: ElevatedButton(
-            onPressed: () => {
-              context.read<ProductRepository>().setProductDone(product, !product.done)
+            onPressed: () {
+              product.done = !product.done;
+              context.read(productRepositoryProvider).save(product);
             },
             child: Icon(Icons.check,
-                color: product.done ? colorScheme.onPrimary : primaryColors[700], size: 28),
+                color:
+                    product.done ? colorScheme.onPrimary : primaryColors[700],
+                size: 28),
             style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(product.done ? colorScheme.primary : primaryColors[200]),
+              backgroundColor: MaterialStateProperty.all(
+                  product.done ? colorScheme.primary : primaryColors[200]),
               shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: defaultBorderRadius,
               )),
               elevation: MaterialStateProperty.all(0),
               padding: MaterialStateProperty.all(

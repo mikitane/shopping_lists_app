@@ -5,5 +5,7 @@
     "productAmountInputPlaceholder": "Määrä",
     "shoppingListProductCountText": "tuotetta",
     "shoppingListProductCountSingleText": "tuote",
-    "newShoppingListLabel": "Uusi lista"
+    "newShoppingListLabel": "Uusi lista",
+    "newShoppingListDialogHeader": "Uusi ostoslista",
+    "newShoppingListInputPlaceholder": "Ostoslistan nimi"
 }

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
-import 'package:shopping_lists_app/models/product_model.dart';
-import 'package:shopping_lists_app/models/shopping_list_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shopping_lists_app/data/models/product_model.dart';
+import 'package:shopping_lists_app/data/models/shopping_list_model.dart';
 import 'package:shopping_lists_app/repositories/product_repository.dart';
 import 'package:shopping_lists_app/screens/shopping_list_details_screen.dart';
+import 'package:shopping_lists_app/providers.dart';
 import 'package:shopping_lists_app/theme.dart'
     show defaultBorderRadius, primaryColors;
 
 class ShoppingListItem extends StatefulWidget {
-  ShoppingListItem({this.shoppingList});
+  ShoppingListItem({required this.shoppingList});
 
   final ShoppingListModel shoppingList;
 
@@ -19,12 +20,12 @@ class ShoppingListItem extends StatefulWidget {
 }
 
 class _ShoppingListItemState extends State<ShoppingListItem> {
-  ProductRepository productRepository;
+  late ProductRepository productRepository;
 
   @override
   void initState() {
     super.initState();
-    productRepository = context.read<ProductRepository>();
+    productRepository = context.read(productRepositoryProvider);
   }
 
   List<ProductModel> filterProducts(
@@ -57,7 +58,7 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
       progressColor: donePercentage == 100
           ? Theme.of(context).colorScheme.secondary
           : Theme.of(context).colorScheme.primary,
-      backgroundColor: primaryColors[200],
+      backgroundColor: primaryColors[200]!,
       circularStrokeCap: CircularStrokeCap.round,
       startAngle: 180,
     );
@@ -65,8 +66,8 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
 
   Widget _buildDetailTexts(BuildContext context, int totalProductsCount) {
     String productCountLabel = totalProductsCount == 1
-        ? AppLocalizations.of(context).shoppingListProductCountSingleText
-        : AppLocalizations.of(context).shoppingListProductCountText;
+        ? AppLocalizations.of(context)!.shoppingListProductCountSingleText
+        : AppLocalizations.of(context)!.shoppingListProductCountText;
 
     return Container(
       margin: EdgeInsets.only(left: 16),
@@ -92,49 +93,46 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-        initialData: productRepository.products,
-        builder: (context, snapshot) {
-          List<ProductModel> filteredProducts =
-              filterProducts(snapshot.data, widget.shoppingList.id);
+    return Consumer(builder: (context, watch, child) {
+      final productList = watch(productRepositoryProvider.state);
+      List<ProductModel> filteredProducts =
+          filterProducts(productList, widget.shoppingList.id);
 
-          int doneProductsCount =
-              filteredProducts.where((product) => product.done).length;
-          int totalProductsCount = filteredProducts.length;
+      int doneProductsCount =
+          filteredProducts.where((product) => product.done).length;
+      int totalProductsCount = filteredProducts.length;
 
-          int donePercentage = totalProductsCount != 0
-              ? (doneProductsCount * 100 / totalProductsCount).round()
-              : 0;
+      int donePercentage = totalProductsCount != 0
+          ? (doneProductsCount * 100 / totalProductsCount).round()
+          : 0;
 
-          if (donePercentage == 100 &&
-              doneProductsCount != totalProductsCount) {
-            donePercentage = 99;
-          }
-
-          return GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(
-                context,
-                ShoppingListScreen.routeName,
-                arguments: ShoppingListDetailsScreenArguments(
-                    shoppingListId: widget.shoppingList.id),
-              );
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
-                borderRadius: defaultBorderRadius,
-              ),
-              padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    _buildProgressIndicator(context, donePercentage),
-                    _buildDetailTexts(context, totalProductsCount),
-                  ]),
-            ),
+      if (donePercentage == 100 && doneProductsCount != totalProductsCount) {
+        donePercentage = 99;
+      }
+      return GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(
+            context,
+            ShoppingListScreen.routeName,
+            arguments: ShoppingListDetailsScreenArguments(
+                shoppingList: widget.shoppingList),
           );
-        });
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: defaultBorderRadius,
+          ),
+          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _buildProgressIndicator(context, donePercentage),
+                _buildDetailTexts(context, totalProductsCount),
+              ]),
+        ),
+      );
+    });
   }
 }

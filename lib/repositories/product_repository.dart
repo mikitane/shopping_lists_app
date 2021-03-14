@@ -1,33 +1,21 @@
-import 'dart:async';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shopping_lists_app/data/models/product_model.dart';
+import 'package:shopping_lists_app/providers.dart';
+import 'package:shopping_lists_app/repositories/model_repository.dart';
 
-import 'package:shopping_lists_app/models/product_model.dart';
+class ProductRepository extends ModelRepository<ProductModel> {
+  ProductRepository(this.read);
 
-class ProductRepository {
-  // TODO: Use real stream from database
-  StreamController<List<ProductModel>> productsStreamController = StreamController.broadcast();
-  List<ProductModel> products = [
-    ProductModel(name: 'Maito', amount: '2l', done: false, shoppingListId: '1'),
-    ProductModel(name: 'Juusto', amount: '1kg', done: true, shoppingListId: '1'),
-    ProductModel(name: 'Leipä', amount: '1 paketti', done: true, shoppingListId: '1'),
-    ProductModel(name: 'Olutta', amount: 'paljon', done: true, shoppingListId: '2'),
-    ProductModel(name: 'Sipsit', amount: '', done: false, shoppingListId: '2'),
-    ProductModel(name: 'Limut', amount: '4l', done: false, shoppingListId: '2'),
-    ProductModel(name: 'Nauloja', amount: '1kg', done: true, shoppingListId: '3'),
-    ProductModel(name: 'Vasara', amount: '', done: true, shoppingListId: '3'),
-  ];
+  final Reader read;
 
+  @override
+  void save(ProductModel product) {
+    super.save(product);
 
-  Stream<List<ProductModel>> getProductsStream() {
-    return productsStreamController.stream;
-  }
+    final shoppingListRepo = read(shoppingListRepositoryProvider);
+    final shoppingList = shoppingListRepo.get(product.shoppingListId)!
+      ..lastModified = DateTime.now();
 
-  void createProduct(ProductModel newProduct) {
-    products.add(newProduct);
-    productsStreamController.add(products);
-  }
-
-  void setProductDone(ProductModel product, bool done) {
-    products.singleWhere((element) => element.id == product.id).done = done;
-    productsStreamController.add(products);
+    shoppingListRepo.save(shoppingList);
   }
 }
