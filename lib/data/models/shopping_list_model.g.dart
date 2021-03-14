@@ -18,6 +18,7 @@ class ShoppingListModelAdapter extends TypeAdapter<ShoppingListModel> {
     };
     return ShoppingListModel(
       name: fields[1] as String,
+      lastModified: fields[3] as DateTime,
       products: (fields[2] as List).cast<ProductModel>(),
       id: fields[0] as dynamic,
     );
@@ -26,13 +27,15 @@ class ShoppingListModelAdapter extends TypeAdapter<ShoppingListModel> {
   @override
   void write(BinaryWriter writer, ShoppingListModel obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.name)
       ..writeByte(2)
-      ..write(obj.products);
+      ..write(obj.products)
+      ..writeByte(3)
+      ..write(obj.lastModified);
   }
 
   @override

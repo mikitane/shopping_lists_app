@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shopping_lists_app/data/models/shopping_list_model.dart';
 import 'package:shopping_lists_app/repositories/shopping_list_repository.dart';
 import 'package:shopping_lists_app/providers.dart';
+import 'package:shopping_lists_app/theme.dart';
 import 'package:shopping_lists_app/widgets/common/custom_app_bar.dart';
 import 'package:shopping_lists_app/widgets/new_shopping_list/new_shopping_list.dart';
 import 'package:shopping_lists_app/widgets/shopping_lists/shopping_lists.dart';
@@ -25,9 +27,20 @@ class _ShoppingListsScreenState extends State<ShoppingListsScreen> {
   }
 
   void showNewShoppingListDialog() {
-    showDialog(context: context, builder: (BuildContext dialogContext) {
-      return NewShoppingList();
-    });
+    showDialog(
+        context: context,
+        builder: (BuildContext dialogContext) {
+          return NewShoppingList();
+        });
+  }
+
+  List<ShoppingListModel> sortShoppingLists(
+      List<ShoppingListModel> shoppingLists) {
+    final modifiedList = List<ShoppingListModel>.from(shoppingLists)
+      ..sort((a, b) {
+        return a.lastModified.compareTo(b.lastModified) * -1;
+      });
+    return modifiedList;
   }
 
   @override
@@ -42,13 +55,13 @@ class _ShoppingListsScreenState extends State<ShoppingListsScreen> {
       body: Container(
         child: Column(
           children: [
-            Expanded(
-                child: Consumer(
+            Expanded(child: Consumer(
               builder: (context, watch, child) {
-                final shoppingLists = watch(shoppingListRepositoryProvider.state);
+                final shoppingLists =
+                    watch(shoppingListRepositoryProvider.state);
 
                 return ShoppingLists(
-                  shoppingLists: shoppingLists,
+                  shoppingLists: sortShoppingLists(shoppingLists),
                 );
               },
             )),
@@ -67,7 +80,7 @@ class _ShoppingListsScreenState extends State<ShoppingListsScreen> {
                   ),
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: defaultBorderRadius,
                     )),
                     elevation: MaterialStateProperty.all(0),
                     padding: MaterialStateProperty.all(

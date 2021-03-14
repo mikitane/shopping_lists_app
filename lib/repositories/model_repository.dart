@@ -28,7 +28,11 @@ abstract class ModelRepository<T extends BaseModelInterface> extends StateNotifi
   }
 
   void save(T entity) {
-    print('Saving');
     box.put(entity.id, entity);
   }
+
+  T? get(String key) {
+    return box.get(key);
+  }
+
 }

@@ -4,4 +4,4 @@ import 'package:shopping_lists_app/repositories/shopping_list_repository.dart';
 
 final shoppingListRepositoryProvider =
     StateNotifierProvider((_) => ShoppingListRepository());
-final productRepositoryProvider = StateNotifierProvider((_) => ProductRepository());
+final productRepositoryProvider = StateNotifierProvider((ref) => ProductRepository(ref.read));

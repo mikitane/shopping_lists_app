@@ -135,7 +135,7 @@ class _NewProductState extends State<NewProduct> {
                   color: Theme.of(context).colorScheme.onPrimary, size: 28),
               style: ButtonStyle(
                 shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: defaultBorderRadius,
                 )),
                 elevation: MaterialStateProperty.all(0),
                 padding: MaterialStateProperty.all(

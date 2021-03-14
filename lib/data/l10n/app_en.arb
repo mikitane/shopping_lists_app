@@ -6,6 +6,8 @@
     "shoppingListProductCountText": "products",
     "shoppingListProductCountSingleText": "product",
     "newShoppingListLabel": "New list",
+    "newShoppingListDialogHeader": "New shopping list",
+    "newShoppingListInputPlaceholder": "Name of the list",
 
 
     "@shoppingListHeader": {},
@@ -14,5 +16,7 @@
     "@productAmountInputPlaceholder": {},
     "@shoppingListProductCountText": {},
     "@shoppingListProductCountSingleText": {},
-    "@newShoppingListLabel": {}
+    "@newShoppingListLabel": {},
+    "@newShoppingListDialogHeader": {},
+    "@newShoppingListInputPlaceholder": {}
 }

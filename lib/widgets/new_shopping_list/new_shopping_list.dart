@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shopping_lists_app/data/models/shopping_list_model.dart';
 import 'package:shopping_lists_app/providers.dart';
 import 'package:shopping_lists_app/screens/shopping_list_details_screen.dart';
@@ -30,7 +31,7 @@ class _NewShoppingListState extends State<NewShoppingList> {
 
   void createShoppingList() {
     if (nameFieldController.text.isNotEmpty) {
-      final newShoppingList = ShoppingListModel(name: nameFieldController.text);
+      final newShoppingList = ShoppingListModel(name: nameFieldController.text, lastModified: DateTime.now());
       context.read(shoppingListRepositoryProvider).save(newShoppingList);
 
       final rootNavigator = Navigator.of(context, rootNavigator: true);
@@ -47,6 +48,7 @@ class _NewShoppingListState extends State<NewShoppingList> {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: defaultBorderRadius),
+      insetPadding: EdgeInsets.symmetric(horizontal: 32, vertical: 24),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -57,18 +59,20 @@ class _NewShoppingListState extends State<NewShoppingList> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                margin: EdgeInsets.only(left: 24, top: 24),
+                margin: EdgeInsets.only(left: 24),
+                height: 64,
+                alignment: Alignment.centerLeft,
                 child: Text(
-                  'Uusi kauppalista',
+                  AppLocalizations.of(context)!.newShoppingListDialogHeader,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
-                    fontSize: 22,
+                    fontSize: 20,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                margin: EdgeInsets.only(bottom: 24, left: 24, right: 24),
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
                   color: primaryColors[200],
@@ -87,12 +91,12 @@ class _NewShoppingListState extends State<NewShoppingList> {
                       hintStyle: TextStyle(color: primaryColors[700]),
                       // contentPadding: EdgeInsets.symmetric(horizontal: 16),
                       border: InputBorder.none,
-                      hintText: 'Kauppalistan nimi'),
+                      hintText: AppLocalizations.of(context)!.newShoppingListInputPlaceholder),
                 ),
               ),
               Container(
                 alignment: Alignment.bottomRight,
-                margin: EdgeInsets.only(right: 12, bottom: 6),
+                margin: EdgeInsets.only(right: 8, bottom: 4),
                 child: ElevatedButton(
                   onPressed: () => {createShoppingList()},
                   child: Text('Luo',
@@ -104,7 +108,7 @@ class _NewShoppingListState extends State<NewShoppingList> {
                     backgroundColor:
                         MaterialStateProperty.all(Colors.transparent),
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: defaultBorderRadius,
                     )),
                     elevation: MaterialStateProperty.all(0),
                     padding: MaterialStateProperty.all(

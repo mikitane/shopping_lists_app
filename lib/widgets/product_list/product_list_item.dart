@@ -58,7 +58,7 @@ class ProductListItem extends StatelessWidget {
               backgroundColor: MaterialStateProperty.all(
                   product.done ? colorScheme.primary : primaryColors[200]),
               shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: defaultBorderRadius,
               )),
               elevation: MaterialStateProperty.all(0),
               padding: MaterialStateProperty.all(
