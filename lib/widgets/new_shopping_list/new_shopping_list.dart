@@ -37,7 +37,7 @@ class _NewShoppingListState extends State<NewShoppingList> {
       final rootNavigator = Navigator.of(context, rootNavigator: true);
       rootNavigator.pop();
       rootNavigator.pushNamed(
-        ShoppingListScreen.routeName,
+        ShoppingListDetailsScreen.routeName,
         arguments:
             ShoppingListDetailsScreenArguments(shoppingList: newShoppingList),
       );

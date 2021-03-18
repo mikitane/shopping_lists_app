@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Shopping Lists App',
         initialRoute: ShoppingListsScreen.routeName,
-        routes: buildRoutes(),
+        onGenerateRoute: generateRoutes,
         theme: buildTheme(context),
         localizationsDelegates: buildLocalizationsDelegates(),
         supportedLocales: buildSupportedLocales(),

@@ -6,10 +6,11 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shopping_lists_app/data/hive.dart';
 import 'package:shopping_lists_app/data/models/base_model_interface.dart';
 
-abstract class ModelRepository<T extends BaseModelInterface> extends StateNotifier<List<T>> {
+abstract class BoxRepository<T extends BaseModelInterface>
+    extends StateNotifier<Map<String, T>> {
   Box<T> box = Hive.box<T>(modelBoxMapping[T]!);
 
-  ModelRepository() : super([]) {
+  BoxRepository() : super({}) {
     _initDb();
   }
 
@@ -24,7 +25,13 @@ abstract class ModelRepository<T extends BaseModelInterface> extends StateNotifi
   }
 
   void _updateFromDb() {
-    state = box.values.toList();
+    print('BoxRepository RUN');
+    List<T> newItems = box.values.toList();
+    state = Map.fromIterable(
+      newItems,
+      key: (item) => item.id,
+      value: (item) => item,
+    );
   }
 
   void save(T entity) {
@@ -32,7 +39,6 @@ abstract class ModelRepository<T extends BaseModelInterface> extends StateNotifi
   }
 
   T? get(String key) {
-    return box.get(key);
+    return state[key];
   }
-
 }

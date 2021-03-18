@@ -6,9 +6,8 @@ import 'package:shopping_lists_app/theme.dart'
     show defaultBorderRadius, primaryColors;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 class NewProduct extends StatefulWidget {
-  NewProduct({ required this.shoppingListId });
+  NewProduct({required this.shoppingListId});
 
   final String shoppingListId;
 
@@ -36,11 +35,15 @@ class _NewProductState extends State<NewProduct> {
 
   void createProduct() {
     if (nameFieldController.text.isNotEmpty) {
-      context.read(productRepositoryProvider).save(ProductModel(
+      final newProduct = ProductModel(
           shoppingListId: widget.shoppingListId,
           name: nameFieldController.text,
           amount: amountFieldController.text,
-          done: false));
+          done: false);
+
+      context
+          .read(productRepositoryProvider)
+          .saveProduct(newProduct, widget.shoppingListId);
 
       nameFieldFocusNode!.requestFocus();
     }

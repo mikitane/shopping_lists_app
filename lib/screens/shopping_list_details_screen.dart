@@ -3,6 +3,7 @@ import 'package:shopping_lists_app/data/models/product_model.dart';
 import 'package:shopping_lists_app/repositories/product_repository.dart';
 import 'package:shopping_lists_app/data/models/shopping_list_model.dart';
 import 'package:shopping_lists_app/providers.dart';
+import 'package:shopping_lists_app/selectors/shopping_list_selectors.dart';
 import 'package:shopping_lists_app/widgets/common/custom_app_bar.dart';
 import 'package:shopping_lists_app/widgets/new_product/new_product.dart';
 import 'package:shopping_lists_app/widgets/product_list/product_list.dart';
@@ -13,28 +14,28 @@ class ShoppingListDetailsScreenArguments {
   final ShoppingListModel shoppingList;
 }
 
-class ShoppingListScreen extends StatefulWidget {
+class ShoppingListDetailsScreen extends StatefulWidget {
   static const routeName = '/shoppingList';
 
+  ShoppingListDetailsScreen(this.args);
+
+  final ShoppingListDetailsScreenArguments args;
+
   @override
-  _ShoppingListScreenState createState() => _ShoppingListScreenState();
+  _ShoppingListDetailsScreenState createState() => _ShoppingListDetailsScreenState();
 }
 
-class _ShoppingListScreenState extends State<ShoppingListScreen> {
+class _ShoppingListDetailsScreenState extends State<ShoppingListDetailsScreen> {
   late ProductRepository productRepository;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     productRepository = context.read(productRepositoryProvider);
   }
 
-  List<ProductModel> sortAndFilterProducts(
-      List<ProductModel> products, String shoppingListId) {
-    final modifiedList = products
-        .where((element) => element.shoppingListId == shoppingListId)
-        .toList();
+  List<ProductModel> sortProducts(List<ProductModel> products) {
+    final modifiedList = List<ProductModel>.from(products);
     modifiedList.sort((a, b) {
       if (a.done == b.done) return 0;
       if (a.done) return 1;
@@ -43,26 +44,30 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
     return modifiedList;
   }
 
+  void onProductDone(ProductModel product) {
+    product.done = !product.done;
+    context
+        .read(productRepositoryProvider)
+        .saveProduct(product, widget.args.shoppingList.id);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final ShoppingListDetailsScreenArguments args = ModalRoute.of(context)!
-        .settings
-        .arguments as ShoppingListDetailsScreenArguments;
-
     return Scaffold(
-      appBar: CustomAppBar(title: args.shoppingList.name),
+      appBar: CustomAppBar(title: widget.args.shoppingList.name),
       body: Column(
         children: [
           Expanded(
             child: Consumer(builder: (context, watch, child) {
-              final productList = watch(productRepositoryProvider.state);
-              final sortedAndFilteredProducts =
-                  sortAndFilterProducts(productList, args.shoppingList.id);
+              final shoppingList =
+                  watch(singleShoppingListSelector(widget.args.shoppingList.id))!;
+              final sortedProducts = sortProducts(shoppingList.products);
 
-              return ProductList(products: sortedAndFilteredProducts);
+              return ProductList(
+                  products: sortedProducts, onProductDone: onProductDone);
             }),
           ),
-          NewProduct(shoppingListId: args.shoppingList.id),
+          NewProduct(shoppingListId: widget.args.shoppingList.id),
         ],
       ),
     );

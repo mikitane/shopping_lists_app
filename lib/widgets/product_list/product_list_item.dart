@@ -6,9 +6,10 @@ import 'package:shopping_lists_app/theme.dart'
     show defaultBorderRadius, primaryColors;
 
 class ProductListItem extends StatelessWidget {
-  ProductListItem({required this.product, required Key key}) : super(key: key);
+  ProductListItem({required this.product, required this.onProductDone, required Key key}) : super(key: key);
 
   final ProductModel product;
+  final void Function(ProductModel) onProductDone;
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +48,7 @@ class ProductListItem extends StatelessWidget {
           width: 50,
           child: ElevatedButton(
             onPressed: () {
-              product.done = !product.done;
-              context.read(productRepositoryProvider).save(product);
+              onProductDone(product);
             },
             child: Icon(Icons.check,
                 color:

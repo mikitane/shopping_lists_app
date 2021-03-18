@@ -94,13 +94,11 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, watch, child) {
-      final productList = watch(productRepositoryProvider.state);
-      List<ProductModel> filteredProducts =
-          filterProducts(productList, widget.shoppingList.id);
+      final products = widget.shoppingList.products;
 
       int doneProductsCount =
-          filteredProducts.where((product) => product.done).length;
-      int totalProductsCount = filteredProducts.length;
+          products.where((product) => product.done).length;
+      int totalProductsCount = products.length;
 
       int donePercentage = totalProductsCount != 0
           ? (doneProductsCount * 100 / totalProductsCount).round()
@@ -113,7 +111,7 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
         onTap: () {
           Navigator.pushNamed(
             context,
-            ShoppingListScreen.routeName,
+            ShoppingListDetailsScreen.routeName,
             arguments: ShoppingListDetailsScreenArguments(
                 shoppingList: widget.shoppingList),
           );
