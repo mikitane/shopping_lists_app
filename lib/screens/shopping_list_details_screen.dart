@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_lists_app/data/models/product_model.dart';
+import 'package:shopping_lists_app/data/models/product/product_model.dart';
 import 'package:shopping_lists_app/repositories/product_repository.dart';
-import 'package:shopping_lists_app/data/models/shopping_list_model.dart';
+import 'package:shopping_lists_app/data/models/shopping_list/shopping_list_model.dart';
 import 'package:shopping_lists_app/providers.dart';
 import 'package:shopping_lists_app/selectors/shopping_list_selectors.dart';
 import 'package:shopping_lists_app/widgets/common/custom_app_bar.dart';
@@ -45,10 +45,10 @@ class _ShoppingListDetailsScreenState extends State<ShoppingListDetailsScreen> {
   }
 
   void onProductDone(ProductModel product) {
-    product.done = !product.done;
+    final modifiedProduct = product.copyWith(done: !product.done);
     context
         .read(productRepositoryProvider)
-        .saveProduct(product, widget.args.shoppingList.id);
+        .saveProduct(modifiedProduct, widget.args.shoppingList.id);
   }
 
   @override

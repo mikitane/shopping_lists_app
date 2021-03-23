@@ -25,7 +25,6 @@ abstract class BoxRepository<T extends BaseModelInterface>
   }
 
   void _updateFromDb() {
-    print('BoxRepository RUN');
     List<T> newItems = box.values.toList();
     state = Map.fromIterable(
       newItems,

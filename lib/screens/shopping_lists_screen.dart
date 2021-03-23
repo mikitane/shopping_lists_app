@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:shopping_lists_app/data/models/shopping_list_model.dart';
+import 'package:shopping_lists_app/data/models/shopping_list/shopping_list_model.dart';
 import 'package:shopping_lists_app/repositories/shopping_list_repository.dart';
 import 'package:shopping_lists_app/providers.dart';
 import 'package:shopping_lists_app/theme.dart';

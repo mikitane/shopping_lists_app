@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shopping_lists_app/data/models/product_model.dart';
-import 'package:shopping_lists_app/data/models/shopping_list_model.dart';
+import 'package:shopping_lists_app/data/models/product/product_model.dart';
+import 'package:shopping_lists_app/data/models/shopping_list/shopping_list_model.dart';
 import 'package:shopping_lists_app/repositories/product_repository.dart';
 import 'package:shopping_lists_app/screens/shopping_list_details_screen.dart';
 import 'package:shopping_lists_app/providers.dart';
@@ -26,13 +26,6 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
   void initState() {
     super.initState();
     productRepository = context.read(productRepositoryProvider);
-  }
-
-  List<ProductModel> filterProducts(
-      List<ProductModel> products, String shoppingListId) {
-    return products
-        .where((element) => element.shoppingListId == shoppingListId)
-        .toList();
   }
 
   Text _buildProgressText(BuildContext context, int donePercentage) {
