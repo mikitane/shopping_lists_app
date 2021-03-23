@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:shopping_lists_app/data/models/shopping_list_model.dart';
+import 'package:shopping_lists_app/data/models/shopping_list/shopping_list_model.dart';
 import 'package:shopping_lists_app/repositories/shopping_list_repository.dart';
 import 'package:shopping_lists_app/providers.dart';
 import 'package:shopping_lists_app/theme.dart';
@@ -10,7 +10,7 @@ import 'package:shopping_lists_app/widgets/shopping_lists/shopping_lists.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ShoppingListsScreen extends StatefulWidget {
-  static const routeName = '/shoppingLists';
+  static const routeName = '/';
 
   @override
   _ShoppingListsScreenState createState() => _ShoppingListsScreenState();
@@ -21,7 +21,6 @@ class _ShoppingListsScreenState extends State<ShoppingListsScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     shoppingListRepository = context.read(shoppingListRepositoryProvider);
   }
@@ -58,7 +57,7 @@ class _ShoppingListsScreenState extends State<ShoppingListsScreen> {
             Expanded(child: Consumer(
               builder: (context, watch, child) {
                 final shoppingLists =
-                    watch(shoppingListRepositoryProvider.state);
+                    watch(shoppingListRepositoryProvider.state).values.toList();
 
                 return ShoppingLists(
                   shoppingLists: sortShoppingLists(shoppingLists),

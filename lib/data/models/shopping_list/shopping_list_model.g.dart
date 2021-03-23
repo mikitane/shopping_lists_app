@@ -6,26 +6,26 @@ part of 'shopping_list_model.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class ShoppingListModelAdapter extends TypeAdapter<ShoppingListModel> {
+class ShoppingListModelAdapter extends TypeAdapter<_$_ShoppingListModel> {
   @override
   final int typeId = 0;
 
   @override
-  ShoppingListModel read(BinaryReader reader) {
+  _$_ShoppingListModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return ShoppingListModel(
+    return _$_ShoppingListModel(
+      id: fields[0] as String,
       name: fields[1] as String,
-      lastModified: fields[3] as DateTime,
-      products: (fields[2] as List).cast<ProductModel>(),
-      id: fields[0] as dynamic,
+      lastModified: fields[2] as DateTime,
+      products: (fields[3] as List).cast<ProductModel>(),
     );
   }
 
   @override
-  void write(BinaryWriter writer, ShoppingListModel obj) {
+  void write(BinaryWriter writer, _$_ShoppingListModel obj) {
     writer
       ..writeByte(4)
       ..writeByte(0)
@@ -33,9 +33,9 @@ class ShoppingListModelAdapter extends TypeAdapter<ShoppingListModel> {
       ..writeByte(1)
       ..write(obj.name)
       ..writeByte(2)
-      ..write(obj.products)
+      ..write(obj.lastModified)
       ..writeByte(3)
-      ..write(obj.lastModified);
+      ..write(obj.products);
   }
 
   @override

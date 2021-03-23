@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shopping_lists_app/data/models/product_model.dart';
+import 'package:shopping_lists_app/data/models/product/product_model.dart';
 import 'package:shopping_lists_app/providers.dart';
 import 'package:shopping_lists_app/theme.dart'
     show defaultBorderRadius, primaryColors;
 
 class ProductListItem extends StatelessWidget {
-  ProductListItem({required this.product, required Key key}) : super(key: key);
+  ProductListItem({required this.product, required this.onProductDone, required Key key}) : super(key: key);
 
   final ProductModel product;
+  final void Function(ProductModel) onProductDone;
 
   @override
   Widget build(BuildContext context) {
     ColorScheme colorScheme = Theme.of(context).colorScheme;
-    print('ProductListItem build, ' + product.id);
+
     return Row(
       children: [
         Expanded(
@@ -30,7 +31,7 @@ class ProductListItem extends StatelessWidget {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                 ),
                 Text(
-                  product.amount,
+                  product.amount ?? '',
                   style: TextStyle(
                     fontSize: 16,
                   ),
@@ -47,8 +48,7 @@ class ProductListItem extends StatelessWidget {
           width: 50,
           child: ElevatedButton(
             onPressed: () {
-              product.done = !product.done;
-              context.read(productRepositoryProvider).save(product);
+              onProductDone(product);
             },
             child: Icon(Icons.check,
                 color:

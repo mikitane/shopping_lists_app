@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:shopping_lists_app/data/models/product_model.dart';
+import 'package:shopping_lists_app/data/models/product/product_model.dart';
 import 'package:shopping_lists_app/providers.dart';
 import 'package:shopping_lists_app/theme.dart'
     show defaultBorderRadius, primaryColors;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:uuid/uuid.dart';
 
 class NewProduct extends StatefulWidget {
-  NewProduct({ required this.shoppingListId });
+  NewProduct({required this.shoppingListId});
 
   final String shoppingListId;
 
@@ -36,11 +36,15 @@ class _NewProductState extends State<NewProduct> {
 
   void createProduct() {
     if (nameFieldController.text.isNotEmpty) {
-      context.read(productRepositoryProvider).save(ProductModel(
-          shoppingListId: widget.shoppingListId,
+      final newProduct = ProductModel(
+          id: Uuid().v4(),
           name: nameFieldController.text,
           amount: amountFieldController.text,
-          done: false));
+          done: false);
+
+      context
+          .read(productRepositoryProvider)
+          .saveProduct(newProduct, widget.shoppingListId);
 
       nameFieldFocusNode!.requestFocus();
     }
@@ -101,7 +105,6 @@ class _NewProductState extends State<NewProduct> {
   // TODO: Clean up
   @override
   Widget build(BuildContext context) {
-    print('NewProduct build');
     return Container(
       height: 48,
       margin: EdgeInsets.only(left: 16, right: 16, bottom: 16),
