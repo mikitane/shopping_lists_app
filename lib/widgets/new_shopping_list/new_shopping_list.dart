@@ -76,10 +76,12 @@ class _NewShoppingListState extends State<NewShoppingList> {
                 margin: EdgeInsets.only(bottom: 24, left: 24, right: 24),
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
-                  color: primaryColors[200],
+                  color: PrimaryColor.pc200,
                   borderRadius: defaultBorderRadius,
                 ),
                 child: TextField(
+                  keyboardType: TextInputType.text,
+                  textCapitalization: TextCapitalization.sentences,
                   focusNode: nameFieldFocusNode,
                   textInputAction: TextInputAction.done,
                   onSubmitted: (value) {
@@ -89,7 +91,7 @@ class _NewShoppingListState extends State<NewShoppingList> {
                   style:
                       TextStyle(color: Theme.of(context).colorScheme.onSurface),
                   decoration: InputDecoration(
-                      hintStyle: TextStyle(color: primaryColors[700]),
+                      hintStyle: TextStyle(color: PrimaryColor.pc700),
                       // contentPadding: EdgeInsets.symmetric(horizontal: 16),
                       border: InputBorder.none,
                       hintText: AppLocalizations.of(context)!.newShoppingListInputPlaceholder),

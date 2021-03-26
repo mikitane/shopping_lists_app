@@ -3,6 +3,7 @@
     "shoppingListHeader": "Ostoslista",
     "productNameInputPlaceholder": "Tuotteen nimi",
     "productAmountInputPlaceholder": "Määrä",
+    "removeProductsHeader": "Poista tuotteita",
     "shoppingListProductCountText": "tuotetta",
     "shoppingListProductCountSingleText": "tuote",
     "newShoppingListLabel": "Uusi lista",

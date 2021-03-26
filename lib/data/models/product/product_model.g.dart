@@ -21,13 +21,14 @@ class ProductModelAdapter extends TypeAdapter<_$_ProductModel> {
       name: fields[1] as String,
       amount: fields[2] as String?,
       done: fields[3] as bool,
+      removed: fields[4] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, _$_ProductModel obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class ProductModelAdapter extends TypeAdapter<_$_ProductModel> {
       ..writeByte(2)
       ..write(obj.amount)
       ..writeByte(3)
-      ..write(obj.done);
+      ..write(obj.done)
+      ..writeByte(4)
+      ..write(obj.removed);
   }
 
   @override

@@ -37,7 +37,7 @@ abstract class BoxRepository<T extends BaseModelInterface>
     box.put(entity.id, entity);
   }
 
-  T? get(String key) {
+  T? getEntity(String key) {
     return state[key];
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_lists_app/theme.dart';
 
-enum ButtonKind { primary, secondary }
+enum ButtonKind { primary, secondary, error }
 enum ButtonSize { normal }
 // enum ButtonColorFamily { primary }
 
@@ -80,6 +80,8 @@ class CustomButton extends StatelessWidget {
         return colorScheme.onPrimary;
       case ButtonKind.secondary:
         return colorScheme.primary;
+      case ButtonKind.error:
+        return colorScheme.onError;
     }
   }
 
@@ -88,7 +90,9 @@ class CustomButton extends StatelessWidget {
       case ButtonKind.primary:
         return colorScheme.primary;
       case ButtonKind.secondary:
-        return primaryColors[200]!;
+        return PrimaryColor.pc200;
+      case ButtonKind.error:
+        return colorScheme.error;
     }
   }
 

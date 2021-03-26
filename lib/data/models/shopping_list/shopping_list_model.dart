@@ -8,6 +8,7 @@ part 'shopping_list_model.g.dart';
 
 @freezed
 abstract class ShoppingListModel with _$ShoppingListModel implements BaseModelInterface {
+  const ShoppingListModel._();
 
   @HiveType(typeId: 0, adapterName: 'ShoppingListModelAdapter')
   factory ShoppingListModel(
@@ -16,4 +17,6 @@ abstract class ShoppingListModel with _$ShoppingListModel implements BaseModelIn
           @HiveField(2) required DateTime lastModified,
           @HiveField(3) @Default([]) List<ProductModel> products}) =
       _ShoppingListModel;
+
+  List<ProductModel> get visibleProducts => products.where((p) => !p.removed).toList();
 }
