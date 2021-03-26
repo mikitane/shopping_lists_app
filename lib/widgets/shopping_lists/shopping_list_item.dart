@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shopping_lists_app/data/models/product/product_model.dart';
 import 'package:shopping_lists_app/data/models/shopping_list/shopping_list_model.dart';
 import 'package:shopping_lists_app/repositories/product_repository.dart';
 import 'package:shopping_lists_app/screens/shopping_list_details_screen.dart';
 import 'package:shopping_lists_app/providers.dart';
 import 'package:shopping_lists_app/theme.dart'
-    show defaultBorderRadius, primaryColors;
+    show defaultBorderRadius, secondaryTextColor, PrimaryColor;
 
 class ShoppingListItem extends StatefulWidget {
   ShoppingListItem({required this.shoppingList});
@@ -51,7 +50,7 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
       progressColor: donePercentage == 100
           ? Theme.of(context).colorScheme.secondary
           : Theme.of(context).colorScheme.primary,
-      backgroundColor: primaryColors[200]!,
+      backgroundColor: PrimaryColor.pc200,
       circularStrokeCap: CircularStrokeCap.round,
       startAngle: 180,
     );
@@ -73,12 +72,12 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
             Text(
               widget.shoppingList.name,
               style: TextStyle(
-                  fontSize: 16, fontWeight: FontWeight.w600, height: 1),
+                  fontSize: 16, fontWeight: FontWeight.w500, height: 1),
             ),
             SizedBox(height: 6),
             Text(
               '$totalProductsCount $productCountLabel',
-              style: TextStyle(fontSize: 16, height: 1),
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, height: 1, color: secondaryTextColor),
             ),
           ]),
     );
@@ -87,7 +86,7 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, watch, child) {
-      final products = widget.shoppingList.products;
+      final products = widget.shoppingList.visibleProducts;
 
       int doneProductsCount =
           products.where((product) => product.done).length;

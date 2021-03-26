@@ -3,8 +3,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shopping_lists_app/data/models/product/product_model.dart';
 import 'package:shopping_lists_app/providers.dart';
 import 'package:shopping_lists_app/theme.dart'
-    show defaultBorderRadius, primaryColors;
+    show defaultBorderRadius, PrimaryColor;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shopping_lists_app/widgets/common/custom_button.dart';
 import 'package:uuid/uuid.dart';
 
 class NewProduct extends StatefulWidget {
@@ -57,13 +58,15 @@ class _NewProductState extends State<NewProduct> {
     return Expanded(
       child: Container(
         child: TextField(
+          keyboardType: TextInputType.text,
+          textCapitalization: TextCapitalization.sentences,
           textInputAction: TextInputAction.next,
           focusNode: nameFieldFocusNode,
           controller: nameFieldController,
           style: TextStyle(
               fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
           decoration: InputDecoration(
-              hintStyle: TextStyle(color: primaryColors[700]),
+              hintStyle: TextStyle(color: PrimaryColor.pc700),
               // contentPadding: EdgeInsets.symmetric(horizontal: 16),
               border: InputBorder.none,
               hintText:
@@ -77,6 +80,8 @@ class _NewProductState extends State<NewProduct> {
     return Container(
       width: 80,
       child: TextField(
+        keyboardType: TextInputType.visiblePassword,
+        textCapitalization: TextCapitalization.sentences,
         textInputAction: TextInputAction.done,
         onSubmitted: (value) {
           createProduct();
@@ -84,7 +89,7 @@ class _NewProductState extends State<NewProduct> {
         controller: amountFieldController,
         style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
         decoration: InputDecoration(
-            hintStyle: TextStyle(color: primaryColors[700]),
+            hintStyle: TextStyle(color: PrimaryColor.pc700),
             // contentPadding: EdgeInsets.symmetric(horizontal: 16),
             border: InputBorder.none,
             hintText:
@@ -98,7 +103,7 @@ class _NewProductState extends State<NewProduct> {
       height: double.infinity,
       width: 1,
       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      decoration: BoxDecoration(color: primaryColors[700]),
+      decoration: BoxDecoration(color: PrimaryColor.pc700),
     );
   }
 
@@ -115,7 +120,7 @@ class _NewProductState extends State<NewProduct> {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
-                color: primaryColors[200],
+                color: PrimaryColor.pc200,
                 borderRadius: defaultBorderRadius,
               ),
               child: Row(
@@ -129,23 +134,10 @@ class _NewProductState extends State<NewProduct> {
             ),
           ),
           SizedBox(width: 16),
-          SizedBox(
-            height: 50,
-            width: 50,
-            child: ElevatedButton(
-              onPressed: () => createProduct(),
-              child: Icon(Icons.add,
-                  color: Theme.of(context).colorScheme.onPrimary, size: 28),
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                  borderRadius: defaultBorderRadius,
-                )),
-                elevation: MaterialStateProperty.all(0),
-                padding: MaterialStateProperty.all(
-                    EdgeInsets.symmetric(vertical: 0, horizontal: 0)),
-              ),
-            ),
-          )
+          CustomButton(
+            onTap: createProduct,
+            icon: Icons.add,
+          ),
         ],
       ),
     );

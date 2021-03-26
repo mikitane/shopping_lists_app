@@ -154,12 +154,13 @@ class __$ShoppingListModelCopyWithImpl<$Res>
 @HiveType(typeId: 0, adapterName: 'ShoppingListModelAdapter')
 
 /// @nodoc
-class _$_ShoppingListModel implements _ShoppingListModel {
+class _$_ShoppingListModel extends _ShoppingListModel {
   _$_ShoppingListModel(
       {@HiveField(0) required this.id,
       @HiveField(1) required this.name,
       @HiveField(2) required this.lastModified,
-      @HiveField(3) this.products = const []});
+      @HiveField(3) this.products = const []})
+      : super._();
 
   @override
   @HiveField(0)
@@ -210,12 +211,13 @@ class _$_ShoppingListModel implements _ShoppingListModel {
       __$ShoppingListModelCopyWithImpl<_ShoppingListModel>(this, _$identity);
 }
 
-abstract class _ShoppingListModel implements ShoppingListModel {
+abstract class _ShoppingListModel extends ShoppingListModel {
   factory _ShoppingListModel(
       {@HiveField(0) required String id,
       @HiveField(1) required String name,
       @HiveField(2) required DateTime lastModified,
       @HiveField(3) List<ProductModel> products}) = _$_ShoppingListModel;
+  _ShoppingListModel._() : super._();
 
   @override
   @HiveField(0)

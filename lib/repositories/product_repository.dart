@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shopping_lists_app/data/models/product/product_model.dart';
 import 'package:shopping_lists_app/providers.dart';
-import 'package:shopping_lists_app/repositories/model_repository.dart';
 import 'package:shopping_lists_app/selectors/shopping_list_selectors.dart';
 
 class ProductRepository {

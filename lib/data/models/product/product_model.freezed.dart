@@ -20,12 +20,14 @@ class _$ProductModelTearOff {
       {@HiveField(0) required String id,
       @HiveField(1) required String name,
       @HiveField(2) String? amount,
-      @HiveField(3) required bool done}) {
+      @HiveField(3) required bool done,
+      @HiveField(4) bool removed = false}) {
     return _ProductModel(
       id: id,
       name: name,
       amount: amount,
       done: done,
+      removed: removed,
     );
   }
 }
@@ -43,6 +45,8 @@ mixin _$ProductModel {
   String? get amount => throw _privateConstructorUsedError;
   @HiveField(3)
   bool get done => throw _privateConstructorUsedError;
+  @HiveField(4)
+  bool get removed => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ProductModelCopyWith<ProductModel> get copyWith =>
@@ -58,7 +62,8 @@ abstract class $ProductModelCopyWith<$Res> {
       {@HiveField(0) String id,
       @HiveField(1) String name,
       @HiveField(2) String? amount,
-      @HiveField(3) bool done});
+      @HiveField(3) bool done,
+      @HiveField(4) bool removed});
 }
 
 /// @nodoc
@@ -75,6 +80,7 @@ class _$ProductModelCopyWithImpl<$Res> implements $ProductModelCopyWith<$Res> {
     Object? name = freezed,
     Object? amount = freezed,
     Object? done = freezed,
+    Object? removed = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -93,6 +99,10 @@ class _$ProductModelCopyWithImpl<$Res> implements $ProductModelCopyWith<$Res> {
           ? _value.done
           : done // ignore: cast_nullable_to_non_nullable
               as bool,
+      removed: removed == freezed
+          ? _value.removed
+          : removed // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -108,7 +118,8 @@ abstract class _$ProductModelCopyWith<$Res>
       {@HiveField(0) String id,
       @HiveField(1) String name,
       @HiveField(2) String? amount,
-      @HiveField(3) bool done});
+      @HiveField(3) bool done,
+      @HiveField(4) bool removed});
 }
 
 /// @nodoc
@@ -127,6 +138,7 @@ class __$ProductModelCopyWithImpl<$Res> extends _$ProductModelCopyWithImpl<$Res>
     Object? name = freezed,
     Object? amount = freezed,
     Object? done = freezed,
+    Object? removed = freezed,
   }) {
     return _then(_ProductModel(
       id: id == freezed
@@ -145,6 +157,10 @@ class __$ProductModelCopyWithImpl<$Res> extends _$ProductModelCopyWithImpl<$Res>
           ? _value.done
           : done // ignore: cast_nullable_to_non_nullable
               as bool,
+      removed: removed == freezed
+          ? _value.removed
+          : removed // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -157,7 +173,8 @@ class _$_ProductModel implements _ProductModel {
       {@HiveField(0) required this.id,
       @HiveField(1) required this.name,
       @HiveField(2) this.amount,
-      @HiveField(3) required this.done});
+      @HiveField(3) required this.done,
+      @HiveField(4) this.removed = false});
 
   @override
   @HiveField(0)
@@ -171,10 +188,14 @@ class _$_ProductModel implements _ProductModel {
   @override
   @HiveField(3)
   final bool done;
+  @JsonKey(defaultValue: false)
+  @override
+  @HiveField(4)
+  final bool removed;
 
   @override
   String toString() {
-    return 'ProductModel(id: $id, name: $name, amount: $amount, done: $done)';
+    return 'ProductModel(id: $id, name: $name, amount: $amount, done: $done, removed: $removed)';
   }
 
   @override
@@ -188,7 +209,9 @@ class _$_ProductModel implements _ProductModel {
             (identical(other.amount, amount) ||
                 const DeepCollectionEquality().equals(other.amount, amount)) &&
             (identical(other.done, done) ||
-                const DeepCollectionEquality().equals(other.done, done)));
+                const DeepCollectionEquality().equals(other.done, done)) &&
+            (identical(other.removed, removed) ||
+                const DeepCollectionEquality().equals(other.removed, removed)));
   }
 
   @override
@@ -197,7 +220,8 @@ class _$_ProductModel implements _ProductModel {
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(amount) ^
-      const DeepCollectionEquality().hash(done);
+      const DeepCollectionEquality().hash(done) ^
+      const DeepCollectionEquality().hash(removed);
 
   @JsonKey(ignore: true)
   @override
@@ -210,7 +234,8 @@ abstract class _ProductModel implements ProductModel {
       {@HiveField(0) required String id,
       @HiveField(1) required String name,
       @HiveField(2) String? amount,
-      @HiveField(3) required bool done}) = _$_ProductModel;
+      @HiveField(3) required bool done,
+      @HiveField(4) bool removed}) = _$_ProductModel;
 
   @override
   @HiveField(0)
@@ -224,6 +249,9 @@ abstract class _ProductModel implements ProductModel {
   @override
   @HiveField(3)
   bool get done => throw _privateConstructorUsedError;
+  @override
+  @HiveField(4)
+  bool get removed => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ProductModelCopyWith<_ProductModel> get copyWith =>

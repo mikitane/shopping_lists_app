@@ -1,38 +1,40 @@
 import 'package:flutter/material.dart';
 
-Map<int, Color> primaryColors = {
-  // 50:  const Color(0xFFFFFAF5),
-  // 100: const Color(0xFFFEF5EB),
-  200: const Color(0xFFFEEBD8),
-  // 300: const Color(0xFFFCDDC0),
-  // 400: const Color(0xFFF8C9A0),
-  500: const Color(0xFFF4B480),
-  // 600: const Color(0xFFEEA36D),
-  700: const Color(0xFFE7965F),
-  // 800: const Color(0xFFC87846),
-  // 900: const Color(0xFF965027),
-};
+abstract class PrimaryColor {
+  // static const pc50 = Color(0xFFFFFAF5);
+  // static const pc100 = Color(0xFFFEF5EB);
+  static const pc200 = Color(0xFFFEEBD8);
+  // static const pc300 = Color(0xFFFCDDC0);
+  // static const pc400 = Color(0xFFF8C9A0);
+  static const pc500 = Color(0xFFF4B480);
+  // static const pc600 = Color(0xFFEEA36D);
+  static const pc700 = Color(0xFFE7965F);
+  // static const pc800 = Color(0xFFC87846);
+  // static const pc900 = Color(0xFF965027);
+}
 
-Map<int, Color> secondaryColors = {
-  500: const Color(0xFF80C0F4),
-  700: const Color(0xFF4DA5E0),
-};
+abstract class SecondaryColor {
+  static const sc500 = Color(0xFF80C0F4);
+  static const sc700 = Color(0xFF4DA5E0);
+}
+
+Color secondaryTextColor = Color(0xFF867D79);
 
 // ColorScheme or ThemeData do not have this color property
 Color onDisabledColor = Color(0xFFCFC6BF);
 
 ColorScheme colorScheme = ColorScheme(
-  primary: primaryColors[500]!,
-  primaryVariant: primaryColors[700]!,
-  secondary: secondaryColors[500]!,
-  secondaryVariant: secondaryColors[700]!,
+  primary: PrimaryColor.pc500,
+  primaryVariant: PrimaryColor.pc700,
+  secondary: SecondaryColor.sc500,
+  secondaryVariant: SecondaryColor.sc700,
   surface: Colors.white,
   background: const Color(0xFFF8F5F2),
-  error: const Color(0xFFF88C8C),
-  onPrimary: const Color(0xFF773309),
+  error: const Color(0xFFF48080),
+  onPrimary: const Color(0xFF965027),
   onSecondary: const Color(0xFF094D77),
-  onSurface: const Color(0xFF301203),
-  onBackground: const Color(0xFF301203),
+  onSurface: const Color(0xFF46362F),
+  onBackground: const Color(0xFF46362F),
   onError: const Color(0xFF6E0707),
   brightness: Brightness.light,
 );
