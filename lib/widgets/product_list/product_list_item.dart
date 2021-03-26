@@ -4,9 +4,12 @@ import 'package:shopping_lists_app/data/models/product/product_model.dart';
 import 'package:shopping_lists_app/providers.dart';
 import 'package:shopping_lists_app/theme.dart'
     show defaultBorderRadius, primaryColors;
+import 'package:shopping_lists_app/widgets/common/custom_button.dart';
 
 class ProductListItem extends StatelessWidget {
-  ProductListItem({required this.product, required this.onProductDone, required Key key}) : super(key: key);
+  ProductListItem(
+      {required this.product, required this.onProductDone, required Key key})
+      : super(key: key);
 
   final ProductModel product;
   final void Function(ProductModel) onProductDone;
@@ -41,31 +44,13 @@ class ProductListItem extends StatelessWidget {
           ),
         ),
         SizedBox(width: 16),
-
-        // TODO: Create common widget
-        SizedBox(
-          height: 50,
-          width: 50,
-          child: ElevatedButton(
-            onPressed: () {
-              onProductDone(product);
-            },
-            child: Icon(Icons.check,
-                color:
-                    product.done ? colorScheme.onPrimary : primaryColors[700],
-                size: 28),
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(
-                  product.done ? colorScheme.primary : primaryColors[200]),
-              shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                borderRadius: defaultBorderRadius,
-              )),
-              elevation: MaterialStateProperty.all(0),
-              padding: MaterialStateProperty.all(
-                  EdgeInsets.symmetric(vertical: 0, horizontal: 0)),
-            ),
-          ),
-        ),
+        CustomButton(
+          onTap: () {
+            onProductDone(product);
+          },
+          icon: Icons.check,
+          kind: product.done ? ButtonKind.primary : ButtonKind.secondary,
+        )
       ],
     );
   }

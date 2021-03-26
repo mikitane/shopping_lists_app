@@ -5,6 +5,7 @@ import 'package:shopping_lists_app/providers.dart';
 import 'package:shopping_lists_app/theme.dart'
     show defaultBorderRadius, primaryColors;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shopping_lists_app/widgets/common/custom_button.dart';
 import 'package:uuid/uuid.dart';
 
 class NewProduct extends StatefulWidget {
@@ -129,23 +130,10 @@ class _NewProductState extends State<NewProduct> {
             ),
           ),
           SizedBox(width: 16),
-          SizedBox(
-            height: 50,
-            width: 50,
-            child: ElevatedButton(
-              onPressed: () => createProduct(),
-              child: Icon(Icons.add,
-                  color: Theme.of(context).colorScheme.onPrimary, size: 28),
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                  borderRadius: defaultBorderRadius,
-                )),
-                elevation: MaterialStateProperty.all(0),
-                padding: MaterialStateProperty.all(
-                    EdgeInsets.symmetric(vertical: 0, horizontal: 0)),
-              ),
-            ),
-          )
+          CustomButton(
+            onTap: createProduct,
+            icon: Icons.add,
+          ),
         ],
       ),
     );
