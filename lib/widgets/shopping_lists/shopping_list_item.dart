@@ -10,9 +10,11 @@ import 'package:shopping_lists_app/theme.dart'
     show defaultBorderRadius, secondaryTextColor, PrimaryColor;
 
 class ShoppingListItem extends StatefulWidget {
-  ShoppingListItem({required this.shoppingList});
+  ShoppingListItem({required this.shoppingList, required this.onShoppingListTapped, required this.onShoppingListLongPress});
 
   final ShoppingListModel shoppingList;
+  final void Function(ShoppingListModel) onShoppingListTapped;
+  final void Function(ShoppingListModel) onShoppingListLongPress;
 
   @override
   _ShoppingListItemState createState() => _ShoppingListItemState();
@@ -100,13 +102,11 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
         donePercentage = 99;
       }
       return GestureDetector(
+        onLongPress: () {
+          widget.onShoppingListLongPress(widget.shoppingList);
+        },
         onTap: () {
-          Navigator.pushNamed(
-            context,
-            ShoppingListDetailsScreen.routeName,
-            arguments: ShoppingListDetailsScreenArguments(
-                shoppingList: widget.shoppingList),
-          );
+          widget.onShoppingListTapped(widget.shoppingList);
         },
         child: Container(
           decoration: BoxDecoration(

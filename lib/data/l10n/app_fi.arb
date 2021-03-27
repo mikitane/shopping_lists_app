@@ -8,5 +8,6 @@
     "shoppingListProductCountSingleText": "tuote",
     "newShoppingListLabel": "Uusi lista",
     "newShoppingListDialogHeader": "Uusi ostoslista",
-    "newShoppingListInputPlaceholder": "Ostoslistan nimi"
+    "newShoppingListInputPlaceholder": "Ostoslistan nimi",
+    "removeShoppingListLabel": "Poista ostoslista"
 }

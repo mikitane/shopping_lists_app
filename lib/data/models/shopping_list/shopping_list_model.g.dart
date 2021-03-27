@@ -21,13 +21,14 @@ class ShoppingListModelAdapter extends TypeAdapter<_$_ShoppingListModel> {
       name: fields[1] as String,
       lastModified: fields[2] as DateTime,
       products: (fields[3] as List).cast<ProductModel>(),
+      removed: fields[4] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, _$_ShoppingListModel obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class ShoppingListModelAdapter extends TypeAdapter<_$_ShoppingListModel> {
       ..writeByte(2)
       ..write(obj.lastModified)
       ..writeByte(3)
-      ..write(obj.products);
+      ..write(obj.products)
+      ..writeByte(4)
+      ..write(obj.removed);
   }
 
   @override

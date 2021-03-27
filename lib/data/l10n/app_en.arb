@@ -9,6 +9,7 @@
     "newShoppingListLabel": "New list",
     "newShoppingListDialogHeader": "New shopping list",
     "newShoppingListInputPlaceholder": "Name of the list",
+    "removeShoppingListLabel": "Remove shopping list",
 
 
     "@shoppingListHeader": {},
@@ -20,5 +21,6 @@
     "@shoppingListProductCountSingleText": {},
     "@newShoppingListLabel": {},
     "@newShoppingListDialogHeader": {},
-    "@newShoppingListInputPlaceholder": {}
+    "@newShoppingListInputPlaceholder": {},
+    "@removeShoppingListLabel": {}
 }

@@ -20,12 +20,14 @@ class _$ShoppingListModelTearOff {
       {@HiveField(0) required String id,
       @HiveField(1) required String name,
       @HiveField(2) required DateTime lastModified,
-      @HiveField(3) List<ProductModel> products = const []}) {
+      @HiveField(3) List<ProductModel> products = const [],
+      @HiveField(4) bool removed = false}) {
     return _ShoppingListModel(
       id: id,
       name: name,
       lastModified: lastModified,
       products: products,
+      removed: removed,
     );
   }
 }
@@ -43,6 +45,8 @@ mixin _$ShoppingListModel {
   DateTime get lastModified => throw _privateConstructorUsedError;
   @HiveField(3)
   List<ProductModel> get products => throw _privateConstructorUsedError;
+  @HiveField(4)
+  bool get removed => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ShoppingListModelCopyWith<ShoppingListModel> get copyWith =>
@@ -58,7 +62,8 @@ abstract class $ShoppingListModelCopyWith<$Res> {
       {@HiveField(0) String id,
       @HiveField(1) String name,
       @HiveField(2) DateTime lastModified,
-      @HiveField(3) List<ProductModel> products});
+      @HiveField(3) List<ProductModel> products,
+      @HiveField(4) bool removed});
 }
 
 /// @nodoc
@@ -76,6 +81,7 @@ class _$ShoppingListModelCopyWithImpl<$Res>
     Object? name = freezed,
     Object? lastModified = freezed,
     Object? products = freezed,
+    Object? removed = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -94,6 +100,10 @@ class _$ShoppingListModelCopyWithImpl<$Res>
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
               as List<ProductModel>,
+      removed: removed == freezed
+          ? _value.removed
+          : removed // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -109,7 +119,8 @@ abstract class _$ShoppingListModelCopyWith<$Res>
       {@HiveField(0) String id,
       @HiveField(1) String name,
       @HiveField(2) DateTime lastModified,
-      @HiveField(3) List<ProductModel> products});
+      @HiveField(3) List<ProductModel> products,
+      @HiveField(4) bool removed});
 }
 
 /// @nodoc
@@ -129,6 +140,7 @@ class __$ShoppingListModelCopyWithImpl<$Res>
     Object? name = freezed,
     Object? lastModified = freezed,
     Object? products = freezed,
+    Object? removed = freezed,
   }) {
     return _then(_ShoppingListModel(
       id: id == freezed
@@ -147,6 +159,10 @@ class __$ShoppingListModelCopyWithImpl<$Res>
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
               as List<ProductModel>,
+      removed: removed == freezed
+          ? _value.removed
+          : removed // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -159,7 +175,8 @@ class _$_ShoppingListModel extends _ShoppingListModel {
       {@HiveField(0) required this.id,
       @HiveField(1) required this.name,
       @HiveField(2) required this.lastModified,
-      @HiveField(3) this.products = const []})
+      @HiveField(3) this.products = const [],
+      @HiveField(4) this.removed = false})
       : super._();
 
   @override
@@ -175,10 +192,14 @@ class _$_ShoppingListModel extends _ShoppingListModel {
   @override
   @HiveField(3)
   final List<ProductModel> products;
+  @JsonKey(defaultValue: false)
+  @override
+  @HiveField(4)
+  final bool removed;
 
   @override
   String toString() {
-    return 'ShoppingListModel(id: $id, name: $name, lastModified: $lastModified, products: $products)';
+    return 'ShoppingListModel(id: $id, name: $name, lastModified: $lastModified, products: $products, removed: $removed)';
   }
 
   @override
@@ -194,7 +215,9 @@ class _$_ShoppingListModel extends _ShoppingListModel {
                     .equals(other.lastModified, lastModified)) &&
             (identical(other.products, products) ||
                 const DeepCollectionEquality()
-                    .equals(other.products, products)));
+                    .equals(other.products, products)) &&
+            (identical(other.removed, removed) ||
+                const DeepCollectionEquality().equals(other.removed, removed)));
   }
 
   @override
@@ -203,7 +226,8 @@ class _$_ShoppingListModel extends _ShoppingListModel {
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(lastModified) ^
-      const DeepCollectionEquality().hash(products);
+      const DeepCollectionEquality().hash(products) ^
+      const DeepCollectionEquality().hash(removed);
 
   @JsonKey(ignore: true)
   @override
@@ -216,7 +240,8 @@ abstract class _ShoppingListModel extends ShoppingListModel {
       {@HiveField(0) required String id,
       @HiveField(1) required String name,
       @HiveField(2) required DateTime lastModified,
-      @HiveField(3) List<ProductModel> products}) = _$_ShoppingListModel;
+      @HiveField(3) List<ProductModel> products,
+      @HiveField(4) bool removed}) = _$_ShoppingListModel;
   _ShoppingListModel._() : super._();
 
   @override
@@ -231,6 +256,9 @@ abstract class _ShoppingListModel extends ShoppingListModel {
   @override
   @HiveField(3)
   List<ProductModel> get products => throw _privateConstructorUsedError;
+  @override
+  @HiveField(4)
+  bool get removed => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ShoppingListModelCopyWith<_ShoppingListModel> get copyWith =>

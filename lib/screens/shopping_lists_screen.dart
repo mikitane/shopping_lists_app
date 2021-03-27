@@ -3,6 +3,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shopping_lists_app/data/models/shopping_list/shopping_list_model.dart';
 import 'package:shopping_lists_app/repositories/shopping_list_repository.dart';
 import 'package:shopping_lists_app/providers.dart';
+import 'package:shopping_lists_app/screens/shopping_list_details_screen.dart';
+import 'package:shopping_lists_app/selectors/shopping_list_selectors.dart';
+import 'package:shopping_lists_app/theme.dart';
 import 'package:shopping_lists_app/widgets/common/custom_app_bar.dart';
 import 'package:shopping_lists_app/widgets/common/custom_button.dart';
 import 'package:shopping_lists_app/widgets/new_shopping_list/new_shopping_list.dart';
@@ -42,6 +45,50 @@ class _ShoppingListsScreenState extends State<ShoppingListsScreen> {
     return modifiedList;
   }
 
+  void onShoppingListTapped(ShoppingListModel shoppingList) {
+    Navigator.pushNamed(
+      context,
+      ShoppingListDetailsScreen.routeName,
+      arguments: ShoppingListDetailsScreenArguments(shoppingList: shoppingList),
+    );
+  }
+
+  void onShoppingListLongPress(ShoppingListModel shoppingList) {
+    // TODO: Create separate dialog widget
+    showDialog(
+        context: context,
+        builder: (BuildContext dialogContext) {
+          return SimpleDialog(
+              shape: RoundedRectangleBorder(borderRadius: defaultBorderRadius),
+              children: [
+                SimpleDialogOption(
+                    child: Row(
+                      children: [
+                        Icon(Icons.delete, color: colorScheme.error),
+                        SizedBox(width: 16),
+                        Text(
+                            AppLocalizations.of(context)!
+                                .removeShoppingListLabel,
+                            // TODO: Use common text styles
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: colorScheme.error)),
+                      ],
+                    ),
+                    onPressed: () {
+                      removeShoppingList(shoppingList);
+                      Navigator.of(context, rootNavigator: true)..pop();
+                    })
+              ]);
+        });
+  }
+
+  void removeShoppingList(ShoppingListModel shoppingList) {
+    final removedShoppingList = shoppingList.copyWith(removed: true);
+    context.read(shoppingListRepositoryProvider).save(removedShoppingList);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,12 +105,12 @@ class _ShoppingListsScreenState extends State<ShoppingListsScreen> {
               child: Consumer(
                 builder: (context, watch, child) {
                   final shoppingLists =
-                      watch(shoppingListRepositoryProvider.state)
-                          .values
-                          .toList();
+                      watch(visibleShoppingListsSelector).values.toList();
 
                   return ShoppingLists(
                     shoppingLists: sortShoppingLists(shoppingLists),
+                    onShoppingListTapped: onShoppingListTapped,
+                    onShoppingListLongPress: onShoppingListLongPress,
                   );
                 },
               ),
