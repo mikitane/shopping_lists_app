@@ -19,7 +19,10 @@ abstract class ShoppingListModel
     @HiveField(2) required DateTime lastModified,
     @HiveField(3) @Default([]) List<ProductModel> products,
     @HiveField(4) @Default(false) bool removed,
+    @HiveField(5) @Default(false) @JsonKey(ignore: true) bool needsSync,
   }) = _ShoppingListModel;
+
+  factory ShoppingListModel.fromJson(Map<String, dynamic> json) => _$ShoppingListModelFromJson(json);
 
   List<ProductModel> get visibleProducts =>
       products.where((p) => !p.removed).toList();

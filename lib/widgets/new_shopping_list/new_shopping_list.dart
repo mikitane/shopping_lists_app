@@ -32,8 +32,11 @@ class _NewShoppingListState extends State<NewShoppingList> {
 
   void createShoppingList() {
     if (nameFieldController.text.isNotEmpty) {
-      final newShoppingList = ShoppingListModel(id: Uuid().v4(), name: nameFieldController.text, lastModified: DateTime.now());
+      final newShoppingList = ShoppingListModel(id: Uuid().v4(), name: nameFieldController.text, lastModified: DateTime.now(), needsSync: true);
       context.read(shoppingListRepositoryProvider).save(newShoppingList);
+
+      // TODO: Start sync in repository
+      context.read(syncControllerProvider).syncData();
 
       final rootNavigator = Navigator.of(context, rootNavigator: true);
       rootNavigator.pop();

@@ -51,3 +51,26 @@ class ProductModelAdapter extends TypeAdapter<_$_ProductModel> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_$_ProductModel _$_$_ProductModelFromJson(Map<String, dynamic> json) {
+  return _$_ProductModel(
+    id: json['id'] as String,
+    name: json['name'] as String,
+    amount: json['amount'] as String?,
+    done: json['done'] as bool,
+    removed: json['removed'] as bool? ?? false,
+  );
+}
+
+Map<String, dynamic> _$_$_ProductModelToJson(_$_ProductModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'amount': instance.amount,
+      'done': instance.done,
+      'removed': instance.removed,
+    };
