@@ -94,6 +94,7 @@ class _ShoppingListsScreenState extends State<ShoppingListsScreen> {
     return Scaffold(
       appBar: CustomAppBar(
         title: AppLocalizations.of(context)!.shoppingListsHeader,
+        centerTitle: false,
         fontSize: 28.0,
         fontWeight: FontWeight.bold,
         toolbarHeight: 90.0,

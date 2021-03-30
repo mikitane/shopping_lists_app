@@ -4,6 +4,7 @@ import 'package:shopping_lists_app/theme.dart';
 class CustomAppBar extends AppBar {
   CustomAppBar({
     required title,
+    centerTitle,
     leading,
     toolbarHeight = 64.0,
     fontSize = 20.0,
@@ -17,6 +18,7 @@ class CustomAppBar extends AppBar {
                   fontWeight: fontWeight,
                   color: color,
                 )),
+            centerTitle: centerTitle,
             leading: leading,
             toolbarHeight: toolbarHeight,
             automaticallyImplyLeading: automaticallyImplyLeading,

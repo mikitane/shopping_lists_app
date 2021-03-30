@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart' as http;
-import 'package:shopping_lists_app/data/api/config.dart';
+import 'package:shopping_lists_app/data/api/config_secret.dart';
 import 'package:shopping_lists_app/data/api/sync_services/shopping_list_sync_service.dart';
 import 'package:shopping_lists_app/providers.dart';
 
@@ -24,13 +23,11 @@ class SyncController {
     };
 
     await syncShoppingListsToServer(read, defaultHeaders);
+    await syncShoppingListsFromServer(read, defaultHeaders);
 
     // final uri = Uri.parse(BASE_URL + '/shopping-list/aa00f3a5-e64f-4589-8f27-be119f31e001');
     // final res = await http.get(uri, headers: headers);
     // print(res.body);
     syncStateRepo.setSyncing(false);
-
   }
-
-
 }
