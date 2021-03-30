@@ -15,4 +15,6 @@ abstract class ProductModel with _$ProductModel implements BaseModelInterface {
     @HiveField(3) required bool done,
     @HiveField(4) @Default(false) bool removed,
   }) = _ProductModel;
+
+    factory ProductModel.fromJson(Map<String, dynamic> json) => _$ProductModelFromJson(json);
 }

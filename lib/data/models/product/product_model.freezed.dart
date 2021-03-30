@@ -12,6 +12,10 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+ProductModel _$ProductModelFromJson(Map<String, dynamic> json) {
+  return _ProductModel.fromJson(json);
+}
+
 /// @nodoc
 class _$ProductModelTearOff {
   const _$ProductModelTearOff();
@@ -29,6 +33,10 @@ class _$ProductModelTearOff {
       done: done,
       removed: removed,
     );
+  }
+
+  ProductModel fromJson(Map<String, Object> json) {
+    return ProductModel.fromJson(json);
   }
 }
 
@@ -48,6 +56,7 @@ mixin _$ProductModel {
   @HiveField(4)
   bool get removed => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $ProductModelCopyWith<ProductModel> get copyWith =>
       throw _privateConstructorUsedError;
@@ -165,6 +174,7 @@ class __$ProductModelCopyWithImpl<$Res> extends _$ProductModelCopyWithImpl<$Res>
   }
 }
 
+@JsonSerializable()
 @HiveType(typeId: 1, adapterName: 'ProductModelAdapter')
 
 /// @nodoc
@@ -175,6 +185,9 @@ class _$_ProductModel implements _ProductModel {
       @HiveField(2) this.amount,
       @HiveField(3) required this.done,
       @HiveField(4) this.removed = false});
+
+  factory _$_ProductModel.fromJson(Map<String, dynamic> json) =>
+      _$_$_ProductModelFromJson(json);
 
   @override
   @HiveField(0)
@@ -227,6 +240,11 @@ class _$_ProductModel implements _ProductModel {
   @override
   _$ProductModelCopyWith<_ProductModel> get copyWith =>
       __$ProductModelCopyWithImpl<_ProductModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_ProductModelToJson(this);
+  }
 }
 
 abstract class _ProductModel implements ProductModel {
@@ -236,6 +254,9 @@ abstract class _ProductModel implements ProductModel {
       @HiveField(2) String? amount,
       @HiveField(3) required bool done,
       @HiveField(4) bool removed}) = _$_ProductModel;
+
+  factory _ProductModel.fromJson(Map<String, dynamic> json) =
+      _$_ProductModel.fromJson;
 
   @override
   @HiveField(0)

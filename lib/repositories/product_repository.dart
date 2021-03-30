@@ -21,8 +21,9 @@ class ProductRepository {
       // Update
       modifiedProducts[productIndex] = product;
     }
-    final modifiedShoppingList = shoppingList.copyWith(products: modifiedProducts, lastModified: DateTime.now());
+    final modifiedShoppingList = shoppingList.copyWith(products: modifiedProducts, lastModified: DateTime.now(), needsSync: true);
 
     read(shoppingListRepositoryProvider).save(modifiedShoppingList);
+    read(syncControllerProvider).syncData();
   }
 }
